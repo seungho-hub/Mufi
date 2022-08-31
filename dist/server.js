@@ -30,7 +30,7 @@ function onListening() {
     const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
     console.log(`Listening on ${bind}`);
     //connect to database
-    models_1.sequelize.sync({ force: true })
+    models_1.sequelize.sync({ force: false })
         .then(() => {
         console.log("connected succefully");
     })
