@@ -4,11 +4,13 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
     if (req.path == "/auth/signin" || req.path == "/auth/signup") return next()
 
     //authenticated
-    if (req.session) {
+    //condition : client got session and user data
+    if (req.session && req.session.user) {
         return next()
     }
     //not authenticated redirect to signin page
     else {
+        console.log("authenticate failed at middleware")
         res.redirect("/auth/signin")
     }
 }
