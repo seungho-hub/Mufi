@@ -95,3 +95,16 @@ export const signup = (req: Request, res: Response) => {
             })
         })
 }
+
+export const signout = (req: Request, res: Response) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.status(400).json({
+                code: 400,
+                message: "잘못된 요청입니다."
+            })
+        }
+    })
+
+    res.redirect("/auth/signin")
+}
