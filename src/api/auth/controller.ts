@@ -58,9 +58,9 @@ export const signup = async (req: Request, res: Response) => {
     const password1 = req.body.password1
     const password2 = req.body.password2
 
-    const store_id = req.body.store_number
+    const store_id = req.body.store_id
 
-    const registered_store = await Store.findOne({ where: { store_id } })
+    const registered_store = await Store.findOne({ where: { id: store_id } })
 
     //mufi에서 store등록을 해준 store id가 아닐때
     if (registered_store == null) {
