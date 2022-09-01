@@ -1,5 +1,5 @@
 import { sequelize } from "./index"
-import { DataTypes } from "sequelize";
+import { DataTypes, NOW } from "sequelize";
 
 export const Store = sequelize.define("Store", {
     id: {
@@ -14,11 +14,14 @@ export const Store = sequelize.define("Store", {
     },
     registeredAt: {
         type: DataTypes.DATE,
+        defaultValue: NOW
     },
     createdAt: {
         type: DataTypes.DATE,
+        defaultValue: NOW
     },
     updatedAt: {
         type: DataTypes.DATE,
+        defaultValue: NOW,
     }
 })
