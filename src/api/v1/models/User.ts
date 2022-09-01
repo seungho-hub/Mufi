@@ -54,7 +54,4 @@ export const User = sequelize.define("User", {
     }
 })
 
-User.hasOne(Store, {
-    foreignKey: "store_id",
-    onDelete: 'cascade',
-})
+User.belongsTo(Store)
