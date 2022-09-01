@@ -1,8 +1,8 @@
 import { sequelize } from "./index"
 import { DataTypes, NOW, DataType } from 'sequelize';
-import { Store } from "./Store"
+import Store from "./Store"
 
-export const Menu = sequelize.define("Menu", {
+const Menu = sequelize.define("Menu", {
     label: {
         type: DataTypes.STRING
     },
@@ -23,3 +23,5 @@ export const Menu = sequelize.define("Menu", {
     })
 
 Menu.belongsTo(Store)
+
+export default Menu

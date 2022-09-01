@@ -1,5 +1,5 @@
-import { User } from "../v1/models/User"
-import { Store } from "../v1/models/Store"
+import User from "../v1/models/User"
+import Store from "../v1/models/Store"
 import { v4 } from "uuid"
 import md5 from "md5"
 import { Request, Response } from "express"
@@ -39,6 +39,8 @@ export const signin = async (req: Request, res: Response) => {
 
     //validation succeded
     let user = user_email_matched
+
+    console.log(user)
 
     //save session 
     req.session.user = user

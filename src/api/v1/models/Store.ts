@@ -1,7 +1,7 @@
 import { sequelize } from "./index"
 import { DataTypes, NOW } from "sequelize";
 
-export const Store = sequelize.define("Store", {
+const Store = sequelize.define("Store", {
     id: {
         type: DataTypes.STRING,
         primaryKey: true,
@@ -25,3 +25,5 @@ export const Store = sequelize.define("Store", {
         defaultValue: NOW,
     }
 })
+
+export default Store
