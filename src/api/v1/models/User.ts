@@ -1,5 +1,6 @@
 import { sequelize } from "./index"
 import { DataTypes } from "sequelize";
+import { Store } from "./Store";
 
 export const User = sequelize.define("User", {
     id: {
@@ -35,7 +36,7 @@ export const User = sequelize.define("User", {
         allowNull: false,
         unique: true,
     },
-    store_number: {
+    store_id: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true
@@ -51,5 +52,9 @@ export const User = sequelize.define("User", {
         defaultValue: DataTypes.NOW,
         allowNull: false,
     }
+})
 
+User.hasOne(Store, {
+    foreignKey: "store_id",
+    onDelete: 'cascade',
 })

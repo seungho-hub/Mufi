@@ -1,4 +1,5 @@
 import { User } from "../v1/models/User"
+import { Store } from "../v1/models/Store"
 import { v4 } from "uuid"
 import md5 from "md5"
 import { Request, Response } from "express"
@@ -49,7 +50,7 @@ export const renderSignup = (req: Request, res: Response) => {
     res.render("signup")
 }
 
-export const signup = (req: Request, res: Response) => {
+export const signup = async (req: Request, res: Response) => {
     const username = req.body.username
 
     const email = req.body.email
@@ -57,7 +58,19 @@ export const signup = (req: Request, res: Response) => {
     const password1 = req.body.password1
     const password2 = req.body.password2
 
-    const store_number = req.body.store_number
+    const store_id = req.body.store_number
+
+    const registered_store = await Store.findOne({ where: { store_id } })
+
+    //mufi에서 store등록을 해준 store id가 아닐때
+    if (registered_store == null) {
+        res.status(400).json({
+            code: 400,
+            message: "등록되지 않은 매장 번호입니다, 매장 등록을 원하시면 고객센터에 문의해주세요."
+        })
+
+        return
+    }
 
     //password mismatch
     if (password1 != password2) {
@@ -75,12 +88,13 @@ export const signup = (req: Request, res: Response) => {
     //generate uuid for user id
     const id = v4()
 
+
     User.create({
         id,
         username,
         encrypted_password,
         email,
-        store_number,
+        store_id
     })
         .then(user => {
             res.status(200).json({

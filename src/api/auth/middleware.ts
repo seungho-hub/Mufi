@@ -10,7 +10,6 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
     }
     //not authenticated redirect to signin page
     else {
-        console.log("authenticate failed at middleware")
         res.redirect("/auth/signin")
     }
 }

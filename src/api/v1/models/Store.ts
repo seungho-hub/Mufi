@@ -11,5 +11,14 @@ export const Store = sequelize.define("Store", {
     },
     address: {
         type: DataTypes.STRING,
+    },
+    registeredAt: {
+        type: DataTypes.DATE,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
     }
 })
