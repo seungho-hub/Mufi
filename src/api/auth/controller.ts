@@ -1,5 +1,5 @@
-import { User } from "../v1/models/User"
-import { Store } from "../v1/models/Store"
+import User from "../v1/models/User"
+import Store from "../v1/models/Store"
 import { v4 } from "uuid"
 import md5 from "md5"
 import { Request, Response } from "express"
@@ -40,6 +40,8 @@ export const signin = async (req: Request, res: Response) => {
     //validation succeded
     let user = user_email_matched
 
+    console.log(user)
+
     //save session 
     req.session.user = user
 
@@ -61,7 +63,7 @@ export const signup = async (req: Request, res: Response) => {
 
     const store_id = req.body.store_id
 
-    const registered_store = await Store.findOne({ where: { store_id } })
+    const registered_store = await Store.findOne({ where: { id: store_id } })
 
     //mufi에서 store등록을 해준 store id가 아닐때
     if (registered_store == null) {

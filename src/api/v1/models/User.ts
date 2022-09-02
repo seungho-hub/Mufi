@@ -1,8 +1,8 @@
 import { sequelize } from "./index"
 import { DataTypes } from "sequelize";
-import { Store } from "./Store";
+import Store from "./Store";
 
-export const User = sequelize.define("User", {
+const User = sequelize.define("User", {
     id: {
         //uuid v4 => 36byte
         type: DataTypes.STRING(36),
@@ -54,7 +54,8 @@ export const User = sequelize.define("User", {
     }
 })
 
-User.hasOne(Store, {
-    foreignKey: "store_id",
-    onDelete: 'cascade',
+User.belongsTo(Store, {
+    foreignKey: "store_id"
 })
+
+export default User
