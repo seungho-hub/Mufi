@@ -51,6 +51,7 @@ export const renderSignup = (req: Request, res: Response) => {
 }
 
 export const signup = async (req: Request, res: Response) => {
+    console.log(req.body)
     const username = req.body.username
 
     const email = req.body.email
@@ -58,7 +59,7 @@ export const signup = async (req: Request, res: Response) => {
     const password1 = req.body.password1
     const password2 = req.body.password2
 
-    const store_id = req.body.store_number
+    const store_id = req.body.store_id
 
     const registered_store = await Store.findOne({ where: { store_id } })
 
