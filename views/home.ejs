@@ -18,11 +18,11 @@
     </h2>
     <h3></h3>
 
-    <form action="/auth/signout" method="post">
+    <form action="/auth/signout" method="POST">
         <button>logout</button>
     </form>
 
-    <form action="/api/v1/menu/" method="POST" enctype = "multipart/form-data">
+    <form action="/api/v1/menu/" method="POST" enctype="multipart/form-data">
         <input type="text" placeholder="메뉴 이름" name="label">
         <input type="number" placeholder="가격" name="price">
         <input type="file" name="image" accept="image/*" name="img">
@@ -30,7 +30,6 @@
 
         <button> 메뉴 등록 </button>
     </form>
-    <a href="/auth/signout">logout</a>
 </body>
 
 </html>
