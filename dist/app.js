@@ -5,8 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importDefault(require("express"));
+//import routers
 const menu_1 = require("./api/v1/routes/menu");
 const auth_1 = require("./api/auth/auth");
+const home_1 = require("./api/v1/routes/home");
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
 const DBConfig_1 = __importDefault(require("./api/config/DBConfig"));
@@ -27,13 +29,7 @@ exports.app.use(express_1.default.urlencoded({ extended: true }));
 const sessionStore = new MySQLStore(DBConfig_1.default);
 exports.app.use((0, express_session_1.default)((0, SessionConfig_1.default)(sessionStore)));
 exports.app.use(middleware_1.isAuthenticated);
-exports.app.get("/", (req, res) => {
-    if (req.session.user) {
-        res.render("home", req.session.user);
-        return;
-    }
-    res.redirect("/auth/signin");
-});
+exports.app.use("/", home_1.home);
 exports.app.use("/api/v1/menu", menu_1.menu);
 exports.app.use("/auth", auth_1.auth);
 //# sourceMappingURL=app.js.map
