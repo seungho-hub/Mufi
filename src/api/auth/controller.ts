@@ -36,6 +36,8 @@ export const signin = async (req: Request, res: Response) => {
             code: 401,
             message: "계정이 일치하지 않습니다."
         })
+
+
     }
 
     //validation succeded
@@ -71,11 +73,23 @@ export const signup = async (req: Request, res: Response) => {
         return
     }
 
+    const usernameOverlabUser = await User.findOne({ where: { username } })
+
+
+    if (usernameOverlabUser) {
+        res.status(400).json({
+            code: 400,
+            message: "이미 등록된 사용자 이름 입니다."
+        })
+
+        return
+    }
+
     //check password mismatch
     if (password1 != password2) {
         res.status(400).json({
             code: 400,
-            message: "password mismatch",
+            message: "비밀번호 확인이 일치하지 않습니다.",
         })
 
         return
@@ -131,6 +145,8 @@ export const signout = (req: Request, res: Response) => {
             })
         }
     })
+
+    res.clearCookie("connect.sid")
 
     res.redirect("/auth/signin")
 }
