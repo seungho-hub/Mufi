@@ -10,4 +10,4 @@ auth.get("/signup", renderSignup)
 
 auth.post("/signup", signup)
 
-auth.post('/signout', signout)
+auth.delete('/signout', signout)
