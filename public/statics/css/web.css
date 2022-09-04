@@ -1,0 +1,28 @@
+/* aside, section{
+    float: left;
+} */
+
+/* #navbar {
+    width: 10px;
+} */
+
+header > nav {
+    min-height: 52px;
+}
+
+body {
+    overflow: scroll;
+}
+
+footer {
+    clear: left;
+    background-color: orange;
+}
+
+section {
+    background-color: aliceblue;
+}
+
+/* div.uk-offcanvas-bar {
+    background-color: maroon;
+} */

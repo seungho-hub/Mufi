@@ -8,4 +8,5 @@ exports.auth.get("/signin", controller_1.renderSignin);
 exports.auth.post("/signin", controller_1.signin);
 exports.auth.get("/signup", controller_1.renderSignup);
 exports.auth.post("/signup", controller_1.signup);
+exports.auth.post('/signout', controller_1.signout);
 //# sourceMappingURL=auth.js.map
