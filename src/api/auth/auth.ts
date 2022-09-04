@@ -1,13 +1,13 @@
 import { Router } from "express"
 import { renderSignin, renderSignup, signin, signup, signout } from "./controller"
-export const auth = Router()
+export const authUser = Router()
 
-auth.get("/signin", renderSignin)
+authUser.get("/signin", renderSignin)
 
-auth.post("/signin", signin)
+authUser.post("/signin", signin)
 
-auth.get("/signup", renderSignup)
+authUser.get("/signup", renderSignup)
 
-auth.post("/signup", signup)
+authUser.post("/signup", signup)
 
-auth.delete('/signout', signout)
+authUser.delete('/signout', signout)

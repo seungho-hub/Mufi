@@ -3,7 +3,6 @@ import Store from "../v1/models/Store"
 import { v4 } from "uuid"
 import md5 from "md5"
 import { Request, Response } from "express"
-import session from "express-session"
 
 export const renderSignin = async (req: Request, res: Response) => {
     res.render("signin")

@@ -1,7 +1,8 @@
 import express from "express"
 //import routers
 import { menu } from "./api/v1/routes/menu"
-import { auth } from "./api/auth/auth"
+import { authUser } from "./api/auth/auth"
+import { authClient } from "./api/auth-client/auth"
 import { home } from "./api/v1/routes/home"
 
 
@@ -25,7 +26,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "../views"))
 
 //static serving
-app.use(express.static(path.join(__dirname, "../public")))
+app.use(express.static(path.join(process.env.PWD, "public")))
 app.use(express.static(path.join(process.env.PWD, "media")))
 
 //enable body parser
@@ -41,7 +42,8 @@ app.use(isAuthenticated)
 
 app.use("/", home)
 app.use("/api/v1/menu", menu)
-app.use("/auth", auth)
+app.use("/auth", authUser)
+app.use("/auth/client", authClient)
 
 
 
