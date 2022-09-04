@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+</head>
+
+<body>
+    <h1>store :
+        <%= store.name %>
+    </h1>
+    <h2>username :
+        <%= user.username %>
+    </h2>
+    <h3></h3>
+
+    <form action="/auth/signout" method="POST">
+        <button>logout</button>
+    </form>
+
+    <form action="/api/v1/menu/" method="POST" enctype="multipart/form-data">
+        <input type="text" placeholder="메뉴 이름" name="label">
+        <input type="number" placeholder="가격" name="price">
+        <input type="file" name="image" accept="image/*" name="img">
+        <textarea name="" id="" cols="30" rows="10" placeholder="사용자에게 보여줄 간단한 상품에 대한 설명을 적어주세요"></textarea>
+
+        <button> 메뉴 등록 </button>
+    </form>
+</body>
+
+</html>
