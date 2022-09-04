@@ -23,7 +23,7 @@ export const signin = async (req: Request, res: Response) => {
         //sign in failed message have to does not include reason 
         res.status(401).send({
             code: 401,
-            message: "계정이 일치하지 않습니다zz."
+            message: "계정이 일치하지 않습니다."
         })
 
         return
@@ -34,10 +34,11 @@ export const signin = async (req: Request, res: Response) => {
         //sign in failed message have to does not include reason 
         res.status(401).send({
             code: 401,
-            message: "계정이 일치하지 않습니다xx."
+            message: "계정이 일치하지 않습니다."
         })
 
         return
+
     }
 
     //validation succeded
