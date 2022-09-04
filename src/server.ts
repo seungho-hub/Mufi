@@ -38,7 +38,7 @@ function onListening() {
     console.log(`Listening on ${bind}`);
 
     //connect to database
-    sequelize.sync({ force: false })
+    sequelize.sync({ force: true })
         .then(() => {
             console.log("connected succefully")
         })

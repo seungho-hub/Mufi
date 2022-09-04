@@ -4,24 +4,28 @@ import Store from "./Store"
 
 const Menu = sequelize.define("Menu", {
     label: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        allowNull : false,
     },
     price: {
         type: DataTypes.INTEGER,
+        allowNull : false,
     },
     description: {
         type: DataTypes.TEXT,
+    },
+    image : {
+        type : DataTypes.STRING,
+        allowNull : false,
+    },
+    store_id : {
+        type : DataTypes.STRING,
+        allowNull : false
     }
-},
-    {
-        indexes: [
-            {
-                unique: false,
-                fields: ['store_id']
-            }
-        ]
-    })
+})
 
-Menu.belongsTo(Store)
+Menu.belongsTo(Store, {
+    foreignKey : "store_id"
+})
 
 export default Menu

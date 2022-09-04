@@ -53,6 +53,7 @@ export const renderSignup = (req: Request, res: Response) => {
 }
 
 export const signup = async (req: Request, res: Response) => {
+    console.log(req.body)
     const username = req.body.username
 
     const email = req.body.email
