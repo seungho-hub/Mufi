@@ -1,7 +1,7 @@
 console.log("loaded");
 
 const navigateTo = (url) => {
-    history.pushState(null, null, url) //history.pushState 이게 뭐지 찾아보기
+    history.pushState(null, null, url) //history.pushState 이게 뭔지 찾아보기
     router();
 }
 

@@ -22,7 +22,7 @@ const signin = async (req, res) => {
         //sign in failed message have to does not include reason 
         res.status(401).send({
             code: 401,
-            message: "계정이 일치하지 않습니다."
+            message: "계정이 일치하지 않습니다zz."
         });
         return;
     }
@@ -31,12 +31,12 @@ const signin = async (req, res) => {
         //sign in failed message have to does not include reason 
         res.status(401).send({
             code: 401,
-            message: "계정이 일치하지 않습니다."
+            message: "계정이 일치하지 않습니다xx."
         });
+        return;
     }
     //validation succeded
     let user = user_email_matched;
-    console.log(user);
     //save session 
     req.session.user = user;
     res.redirect("/");
@@ -52,20 +52,36 @@ const signup = async (req, res) => {
     const password1 = req.body.password1;
     const password2 = req.body.password2;
     const store_id = req.body.store_id;
+    //check empty value
+    if (!(username && email && password1 && password2 && store_id)) {
+        res.status(400).json({
+            code: 400,
+            message: "입력되지 않은 정보가 있습니다."
+        });
+        return;
+    }
+    const usernameOverlabUser = await User_1.default.findOne({ where: { username } });
+    if (usernameOverlabUser) {
+        res.status(400).json({
+            code: 400,
+            message: "이미 등록된 사용자 이름 입니다."
+        });
+        return;
+    }
+    //check password mismatch
+    if (password1 != password2) {
+        res.status(400).json({
+            code: 400,
+            message: "비밀번호 확인이 일치하지 않습니다.",
+        });
+        return;
+    }
     const registered_store = await Store_1.default.findOne({ where: { id: store_id } });
-    //mufi에서 store등록을 해준 store id가 아닐때
+    //check store id is not registered 
     if (registered_store == null) {
         res.status(400).json({
             code: 400,
             message: "등록되지 않은 매장 번호입니다, 매장 등록을 원하시면 고객센터에 문의해주세요."
-        });
-        return;
-    }
-    //password mismatch
-    if (password1 != password2) {
-        res.status(400).json({
-            code: 400,
-            message: "password mismatch",
         });
         return;
     }
@@ -86,6 +102,7 @@ const signup = async (req, res) => {
         });
     })
         .catch(err => {
+        console.log(err);
         res.status(400).json({
             code: 400,
             message: err.message,
@@ -102,6 +119,7 @@ const signout = (req, res) => {
             });
         }
     });
+    res.clearCookie("connect.sid");
     res.redirect("/auth/signin");
 };
 exports.signout = signout;
