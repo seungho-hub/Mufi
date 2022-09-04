@@ -34,7 +34,7 @@ const User = sequelize.define("User", {
         //md5 hashed string => 32byte
         type: DataTypes.STRING(32),
         allowNull: false,
-        unique: true,
+        unique: false,
     },
     store_id: {
         type: DataTypes.STRING,
