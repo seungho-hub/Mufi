@@ -24,7 +24,7 @@ exports.app.set("view engine", "ejs");
 //set views folder for view engine
 exports.app.set("views", path_1.default.join(__dirname, "../views"));
 //static serving
-exports.app.use(express_1.default.static(path_1.default.join(__dirname, "../public")));
+exports.app.use(express_1.default.static(path_1.default.join(__dirname, "../views", "statics")));
 exports.app.use(express_1.default.static(path_1.default.join(process.env.PWD, "media")));
 //enable body parser
 exports.app.use(express_1.default.urlencoded({ extended: true }));

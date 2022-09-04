@@ -5,41 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="/statics/css/home.css">
+    <link rel="stylesheet" href="/css/home.css">
     <!-- <link rel="stylesheet" media="(max-width: 640px)" href="mobile.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.3/dist/css/uikit.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.3/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.3/dist/js/uikit-icons.min.js"></script>
-    <script type="module" src="/statics/js/index.js" data-link></script>
+    <script type="module" src="/js/index.js" data-link></script>
 </head>
-<style>
-    summary {
-        font-size:large;
-        font-weight: 600;
-    }
-
-    article {
-        border-radius: 0;
-        box-shadow: none;
-        border: 1px solid black;
-    }
-
-    .hidden {
-        visibility: hidden;
-    }
-
-    header > nav {
-        min-height: 52px;
-    }
-
-    body {
-        overflow: scroll;
-    }
-
-    section {
-        background-color: aliceblue;
-}
-</style>
 <body>
     <main class="container" uk-height-viewport="expend: true">
         <!--헤더시작-->
@@ -60,6 +32,7 @@
             </aside>
             <!--콘텐츠부분-->
             <section class="uk-padding-large uk-padding-small@s"  uk-height-viewport="offset-bottom: 52px">
+                
                 <p>실시간 결제 현황</p>
                 <p>필터</p>
                 <a href="/" data-link>Dashboard</a>
@@ -151,6 +124,7 @@
                 <%- include ('nav') %>
             </div>
         </div>
+        <!-- <%- include ('sample_content') %> -->
     </main>
 </body>
 
