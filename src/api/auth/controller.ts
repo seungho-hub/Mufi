@@ -12,6 +12,7 @@ export const renderSignin = async (req: Request, res: Response) => {
 export const signin = async (req: Request, res: Response) => {
     const email = req.body.email
     const password = req.body.password
+
     const encrypted_password = md5(password)
 
 
@@ -40,8 +41,6 @@ export const signin = async (req: Request, res: Response) => {
     //validation succeded
     let user = user_email_matched
 
-    console.log(user)
-
     //save session 
     req.session.user = user
 
@@ -53,7 +52,6 @@ export const renderSignup = (req: Request, res: Response) => {
 }
 
 export const signup = async (req: Request, res: Response) => {
-    console.log(req.body)
     const username = req.body.username
 
     const email = req.body.email
@@ -63,9 +61,29 @@ export const signup = async (req: Request, res: Response) => {
 
     const store_id = req.body.store_id
 
+    //check empty value
+    if (!(username && email && password1 && password2 && store_id)) {
+        res.status(400).json({
+            code: 400,
+            message: "입력되지 않은 정보가 있습니다."
+        })
+
+        return
+    }
+
+    //check password mismatch
+    if (password1 != password2) {
+        res.status(400).json({
+            code: 400,
+            message: "password mismatch",
+        })
+
+        return
+    }
+
     const registered_store = await Store.findOne({ where: { id: store_id } })
 
-    //mufi에서 store등록을 해준 store id가 아닐때
+    //check store id is not registered 
     if (registered_store == null) {
         res.status(400).json({
             code: 400,
@@ -75,15 +93,6 @@ export const signup = async (req: Request, res: Response) => {
         return
     }
 
-    //password mismatch
-    if (password1 != password2) {
-        res.status(400).json({
-            code: 400,
-            message: "password mismatch",
-        })
-
-        return
-    }
 
     //hash password
     const encrypted_password = md5(password1)
@@ -105,7 +114,7 @@ export const signup = async (req: Request, res: Response) => {
             })
         })
         .catch(err => {
-
+            console.log(err)
             res.status(400).json({
                 code: 400,
                 message: err.message,
