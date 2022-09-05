@@ -1,27 +1,29 @@
-// import Dashboard from "./views/Dashboard.js";
-// import Post from "./views/Post.js";
-// import Settings from "./views/Settings.js";
-import {Routes} from "./views/routes.js";
+import Dashboard from "./views/Dashboard.js";
+import Post from "./views/Post.js";
+import Settings from "./views/Settings.js";
+import Routes from "./views/routes.js";
 
-console.log(Routes);
+console.log("loaded");
 
 
 
-const navigateTo = (url) => {
+const navigateTo = (target) => {
+    const url = target.href;
     history.pushState(null, null, url) //history.pushState 이게 뭔지 찾아보기
     router();
 }
 
 const router = async () => {
     //각 경로와 콘솔 출력 내용을 객체의 배열의 형태로 저장
+    
     // const routes = [
     //     { path: "/", view: Dashboard},
     //     { path: "/posts", view: Post},
     //     { path: "/settings", view: Settings}
     // ]
-
+    // const route = {name : page, path : "/" + page}
+        
     //map: 배열 각각의 값에 대해 주어진 동작 수행한 후 결과물을 새로운 배열로 저장
-    //
     const potentialMatches = Routes.map(route => {
         return {
             route: route,
@@ -35,15 +37,16 @@ const router = async () => {
     //만약 일치하는 주소가 아닐 경우 동작하는 함수 -> 강제로 메인 페이지로 보내버림
     if(!match) {
         match = {
-            route: routes[0],
+            route: Routes[0],
             isMatch: true
         }
     }
 
-    // const view = new match.route.view();
+    const view = new match.route.view();
 
     // document.querySelector("#app").innerHTML = await view.getHtml();
-    document.querySelector("#app").innerHTML = "<%- include ('" + match.route.name + "') %>";
+    document.querySelector("#app").innerHTML = "<%- include ('" + match.route.name + "') %>"
+    console.log("done");
 
     // match.route.view()
 }
@@ -57,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("click", e => {
         if(e.target.matches("[data-link]")) {//matches 함수 - CSS 속성이 일치하는 지 선택자 삽입하여 비교, data-link 속성 찾기
             e.preventDefault();
-            navigateTo(e.target.href)
+            navigateTo(e.target)
         }
     });
 });

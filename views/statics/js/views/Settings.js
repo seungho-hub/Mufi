@@ -8,7 +8,7 @@ export default class extends AbstractView {
 
     async getHtml() { //test임
         return ` 
-            <h1>대시보드입니다</h1>
+            <h1>셋팅입니다</h1>
         
         
         `;
