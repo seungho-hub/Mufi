@@ -1,27 +1,73 @@
 <%- include ('header') %>
-<div>
-    <ul class="uk-grid-small uk-child-width-1-1" uk-sortable="handle: .uk-sortable-handle" uk-grid>
-        <li>
-            <div class="uk-card uk-card-default uk-card-body">
-                <div class="uk-inline">
-                    <div>
-                        
-                    </div>
-                    <span class="uk-sortable-handle uk-margin-small-right uk-text-center" uk-icon="icon: table"></span>
-                    <span>Lorem ipsem
-                        <span>22</span>
-                    </span>
-                    Item 1
+
+
+<div class="uk-grid-small" uk-grid>
+    <div class="uk-width-1-3@m">
+        <div class="uk-card uk-card-default uk-card-body">
+            <div class="uk-grid-small uk-child-width-1-2" uk-grid>
+                <div class="sales">
+                    <h4>일간 매출</h4>
+                    <h5>000,000원</h5>
+                </div>
+                <div class="sales">
+                    <h4>일간 방문자</h4>
+                    <h5>000,000명</h5>
+                </div>
+                <div class="sales">
+                    <h4>월간 매출</h4>
+                    <h5>000,000원</h5>
+                </div>
+                <div class="sales">
+                    <h4>월간 방문자</h4>
+                    <h5>000명</h5>
                 </div>
             </div>
-        </li>
-        <li>
-            <div class="uk-card uk-card-default uk-card-body">
-                <span class="uk-sortable-handle uk-margin-small-right uk-text-center" uk-icon="icon: table"></span>Item 1
-            </div>
-        </li>
-    </ul>
+        </div>
+    </div>
+    <div class="uk-width-2-3@m">
+        <ul class="uk-grid-small uk-child-width-1-2@m uk-child-width-1-3@l" uk-grid>
+            <li>
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div class="uk-inline">
+                        <div>
+                            
+                        </div>
+                        <span>Lorem ipsem
+                            <span>22</span>
+                        </span>
+                        Item 1
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div class="uk-inline">
+                        <div>
+                            
+                        </div>
+                        <span>Lorem ipsem
+                            <span>22</span>
+                        </span>
+                        Item 1
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="uk-card uk-card-default uk-card-body">
+                    <div class="uk-inline">
+                        <div>
+                            
+                        </div>
+                        <span>Lorem ipsem
+                            <span>22</span>
+                        </span>
+                        Item 1
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>
-<%- include ('footer') %>
-
-<!-- home아님 그냥 참고용 샘플 파일임-->
+    <%- include ('footer') %>
+    
+    <!-- home아님 그냥 참고용 샘플 파일임-->
