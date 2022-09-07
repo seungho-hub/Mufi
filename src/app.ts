@@ -1,8 +1,8 @@
 import express from "express"
 //import routers
 import { menu } from "./api/v1/routes/menu"
-import { authUser } from "./api/auth/auth"
-import { authClient } from "./api/auth-client/auth"
+import { authStore } from "./api/auth/store/route"
+import { authUser } from "./api/auth/user/route"
 import { home } from "./api/v1/routes/home"
 
 
@@ -11,13 +11,13 @@ import session from "express-session"
 import dbConfig from "./api/config/DBConfig"
 import createSessionConfig from "./api/config/SessionConfig"
 const MySQLStore = require("express-mysql-session")(session)
-import { isAuthenticated } from "./api/auth/middleware"
+import { isAuthenticated } from "./api/auth/store/middleware"
 import fileupload from "express-fileupload"
 
 export const app = express()
 
 //set port number
-app.set("port", process.env.PORT || 8000)
+app.set("port", process.env.PORT || 80)
 
 //set view engine 'ejs'
 app.set("view engine", "ejs");
@@ -42,8 +42,8 @@ app.use(isAuthenticated)
 
 app.use("/", home)
 app.use("/api/v1/menu", menu)
-app.use("/auth", authUser)
-app.use("/auth/client", authClient)
+app.use("/auth/user", authUser)
+app.use("/auth/store", authStore)
 
 
 

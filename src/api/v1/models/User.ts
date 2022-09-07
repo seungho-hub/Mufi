@@ -1,7 +1,8 @@
 import { sequelize } from "./index"
 import { DataTypes } from "sequelize";
-import Store from "./Store";
 
+//user는 무조건 oauth profile로 등록됨.
+//현재는 kakao oauth service만 사용중
 const User = sequelize.define("User", {
     id: {
         //uuid v4 => 36byte
@@ -21,41 +22,17 @@ const User = sequelize.define("User", {
         },
         unique: true,
     },
-    email: {
+    pfp: {
         type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-            isEmail: { msg: "이메일이 유효하지 않습니다" }
-
-        },
-        unique: true,
+        allowNull: true,
     },
-    encrypted_password: {
-        //md5 hashed string => 32byte
-        type: DataTypes.STRING(32),
-        allowNull: false,
-        unique: false,
-    },
-    store_id: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true
-    },
-
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
         allowNull: false,
     },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-        allowNull: false,
-    }
 })
 
-User.belongsTo(Store, {
-    foreignKey: "store_id"
-})
+
 
 export default User
