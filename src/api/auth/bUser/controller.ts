@@ -105,10 +105,8 @@ export const signup = async (req: Request, res: Response) => {
     })
         .then(buser => {
             req.session.buser = buser
-            res.status(200).json({
-                code: 200,
-                bUser
-            })
+
+            res.redirect("/auth/buser/signin")
         })
         .catch(err => {
             console.log(err)
