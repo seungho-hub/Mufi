@@ -24,3 +24,8 @@ body {
 section {
     background-color: aliceblue;
 }
+
+#content {
+    margin: 0 auto;
+    /* background-color: aqua; */
+}

@@ -13,7 +13,8 @@
             <li><a href="/store/add">매장 신규 등록</a></li>
             <li><a href="/store/edit">매장 정보 수정</a></li>
             <!-- <li><a href="#">매장 삭제</a></li> -->
-            <li><a href="/store/edit">제품 신규 등록</a></li>
+            <li><a href="/item/add">상품 등록</a></li>
+            <li><a href="/item/add">상품 수정</a></li>
         </ul>
     </li>
     <li class="uk-nav-divider"></li>
@@ -29,8 +30,10 @@
         <li class="uk-nav-header">지원</li>
         <!-- <li><a href="/service/contact">MUFI 문의</a></li> -->
         <li><a href="/service/info">정보</a></li>
-        <form action="/auth/signout" method="POST">
-            <li><a href="#" type="submit" onclick="console.log('send테스트')">로그아웃</li></li>
-        </form>
+        <li>
+            <form action="/auth/signout" method="POST">
+                <a href="#" type="submit" onclick="console.log('send테스트')">로그아웃</a>
+            </form>
+        </li>
     </ul>
 </ul>
