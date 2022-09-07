@@ -7,7 +7,7 @@ const Errors = {
 }
 
 export async function renderSignin(req: Request, res: Response) {
-    res.render("client/signin")
+    res.render("user/signin")
 }
 export async function signout(req: Request, res: Response) {
     req.session.destroy((err) => {

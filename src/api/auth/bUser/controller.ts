@@ -5,7 +5,7 @@ import md5 from "md5"
 import { Request, Response } from "express"
 
 export const renderSignin = async (req: Request, res: Response) => {
-    res.render("signin")
+    res.render("buser/signin")
 }
 
 export const signin = async (req: Request, res: Response) => {
@@ -15,7 +15,7 @@ export const signin = async (req: Request, res: Response) => {
     const encrypted_password = md5(password)
 
 
-    let user_email_matched = await User.findOne({ where: { email: email } })
+    let user_email_matched = await bUser.findOne({ where: { email: email } })
 
     // user mismatched signin failed.
     if (user_email_matched == null) {
@@ -40,7 +40,7 @@ export const signin = async (req: Request, res: Response) => {
 
     }
 
-    //validation succeded
+    //validation succededW
     let user = user_email_matched
 
     //save session 
@@ -50,7 +50,7 @@ export const signin = async (req: Request, res: Response) => {
 }
 
 export const renderSignup = (req: Request, res: Response) => {
-    res.render("signup")
+    res.render("buser/signup")
 }
 
 export const signup = async (req: Request, res: Response) => {
@@ -132,5 +132,5 @@ export const signout = (req: Request, res: Response) => {
 
     res.clearCookie("connect.sid")
 
-    res.redirect("/auth/signin")
+    res.redirect("/auth/buser/signin")
 }
