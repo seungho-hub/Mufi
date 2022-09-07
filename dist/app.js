@@ -15,7 +15,7 @@ const express_session_1 = __importDefault(require("express-session"));
 const DBConfig_1 = __importDefault(require("./api/config/DBConfig"));
 const SessionConfig_1 = __importDefault(require("./api/config/SessionConfig"));
 const MySQLStore = require("express-mysql-session")(express_session_1.default);
-const middleware_1 = require("./api/auth/buser/middleware");
+const middleware_1 = require("./api/auth/bUser/middleware");
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 exports.app = (0, express_1.default)();
 //set port number
