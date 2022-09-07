@@ -3,7 +3,7 @@ import { sequelize } from "./api/v1/models"
 
 const port = app.get("port");
 
-const server = app.listen(port, onListening);
+const server = app.listen(port, process.env.HOST, onListening);
 
 server.on("error", onError);
 
@@ -37,7 +37,7 @@ function onListening() {
         typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
 
     //connect to database
-    sequelize.sync({ alter: true })
+    sequelize.sync({ force: true })
         .then(() => {
             console.log("connected succefully")
         })

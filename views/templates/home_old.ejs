@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.3/dist/js/uikit-icons.min.js"></script>
     <script type="module" src="js/index.js"></script>
 </head>
+
 <body>
     <main class="container" uk-height-viewport="expend: true">
         <!--헤더시작-->
@@ -30,9 +32,9 @@
                 <%- include ('nav') %>
             </aside>
             <!--콘텐츠부분-->
-            <section class="uk-padding-large uk-padding-small@s"  uk-height-viewport="offset-bottom: 52px">
+            <section class="uk-padding-large uk-padding-small@s" uk-height-viewport="offset-bottom: 52px">
                 <div id="app">
-                    
+
                 </div>
                 <a href="/" id="11" data-link>Dashboard</a>
                 <a href="/posts" id="22" data-link>Posts</a>
@@ -41,10 +43,11 @@
             <!--풋터-->
         </div>
         <div id="offcanvas-nav" uk-offcanvas="overlay: true; flip: true">
-            <div class="uk-offcanvas-bar uk-background-primary uk-padding-small" >
+            <div class="uk-offcanvas-bar uk-background-primary uk-padding-small">
                 <%- include ('nav') %>
             </div>
         </div>
     </main>
 </body>
+
 </html>
