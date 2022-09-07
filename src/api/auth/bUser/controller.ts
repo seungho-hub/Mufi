@@ -66,7 +66,7 @@ export const signup = async (req: Request, res: Response) => {
         return
     }
 
-    const usernameOverlabUser = await User.findOne({ where: { username } })
+    const usernameOverlabUser = await bUser.findOne({ where: { username } })
 
 
     //user already exist with username
@@ -97,13 +97,14 @@ export const signup = async (req: Request, res: Response) => {
     const id = v4()
 
 
-    User.create({
+    bUser.create({
         id,
         username,
         encrypted_password,
         email,
     })
         .then(buser => {
+            req.session.buser = buser
             res.status(200).json({
                 code: 200,
                 bUser
