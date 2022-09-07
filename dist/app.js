@@ -22,7 +22,7 @@ exports.app.set("port", process.env.PORT || 8000);
 //set view engine 'ejs'
 exports.app.set("view engine", "ejs");
 //set views folder for view engine
-exports.app.set("views", path_1.default.join(__dirname, "../views"));
+exports.app.set("views", path_1.default.join(__dirname, "../views", "templates"));
 //static serving
 exports.app.use(express_1.default.static(path_1.default.join(__dirname, "../views", "statics")));
 exports.app.use(express_1.default.static(path_1.default.join(process.env.PWD, "media")));

@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/home.css">
-    <!-- <link rel="stylesheet" media="(max-width: 640px)" href="mobile.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.3/dist/css/uikit.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.3/dist/js/uikit.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/uikit@3.15.3/dist/js/uikit-icons.min.js"></script>
-    <script type="module" src="js/index.js" data-link></script>
+    <script type="module" src="js/index.js"></script>
 </head>
 <body>
     <main class="container" uk-height-viewport="expend: true">
@@ -46,20 +45,6 @@
                 <%- include ('nav') %>
             </div>
         </div>
-        <!-- <%- include ('sample_content') %> -->
     </main>
 </body>
-
-<script>
-    const a = document.querySelectorAll("#modal a");
-    const btnModalOpen = document.querySelector("#btn-modal-open");
-    const modal = document.querySelector("#modal");
-    btnModalOpen.addEventListener("click", function() {
-        modal.classList.remove('hidden')
-    })
-    a.forEach((element) => {
-        element.addEventListener("click", function() {
-        modal.classList.add('hidden')
-    })});
-</script>
 </html>
