@@ -23,10 +23,10 @@ app.set("port", process.env.PORT || 80)
 app.set("view engine", "ejs");
 
 //set views folder for view engine
-app.set("views", path.join(__dirname, "../views"))
+app.set("views", path.join(__dirname, "../views", "templates"))
 
 //static serving
-app.use(express.static(path.join(process.env.PWD, "public")))
+app.use(express.static(path.join(__dirname, "../views", "statics")))
 app.use(express.static(path.join(process.env.PWD, "media")))
 
 //enable body parser
