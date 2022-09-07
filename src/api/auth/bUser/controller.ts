@@ -1,4 +1,4 @@
-import User from "../..//v1/models/User"
+import User from "../../v1/models/User"
 import bUser from "../../v1/models/BUser"
 import { v4 } from "uuid"
 import md5 from "md5"

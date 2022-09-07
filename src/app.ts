@@ -1,7 +1,7 @@
 import express from "express"
 //import routers
 import { menu } from "./api/v1/routes/menu"
-import { authBUser } from "./api/auth/store/route"
+import { authBUser } from "./api/auth/buser/route"
 import { authUser } from "./api/auth/user/route"
 import { home } from "./api/v1/routes/home"
 
@@ -11,7 +11,7 @@ import session from "express-session"
 import dbConfig from "./api/config/DBConfig"
 import createSessionConfig from "./api/config/SessionConfig"
 const MySQLStore = require("express-mysql-session")(session)
-import { isAuthenticated } from "./api/auth/store/middleware"
+import { bUserAuthenticated } from "./api/auth/buser/middleware"
 import fileupload from "express-fileupload"
 
 export const app = express()
@@ -36,12 +36,16 @@ app.use(fileupload({}))
 const sessionStore = new MySQLStore(dbConfig)
 
 app.use(session(createSessionConfig(sessionStore)))
-app.use(isAuthenticated)
+
+//except auth router from session check middleware
+app.use("/buser", bUserAuthenticated.unless({
+    path: [/\/auth\/*/],
+}))
 
 app.use("/", home)
 app.use("/api/v1/menu", menu)
 app.use("/auth/user", authUser)
-app.use("/auth/bUser", authBUser)
+app.use("/auth/buser", authBUser)
 
 
 
