@@ -1,6 +1,6 @@
 import { sequelize } from "./index"
 import { DataTypes, NOW, DataType } from 'sequelize';
-import Store from "./Store"
+import Store from "./BUser"
 
 const Menu = sequelize.define("Menu", {
     id: {

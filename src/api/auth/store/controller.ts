@@ -1,5 +1,5 @@
 import User from "../..//v1/models/User"
-import Store from "../../v1/models/Store"
+import bUser from "../../v1/models/BUser"
 import { v4 } from "uuid"
 import md5 from "md5"
 import { Request, Response } from "express"
@@ -54,17 +54,10 @@ export const renderSignup = (req: Request, res: Response) => {
 }
 
 export const signup = async (req: Request, res: Response) => {
-    const username = req.body.username
-
-    const email = req.body.email
-
-    const password1 = req.body.password1
-    const password2 = req.body.password2
-
-    const store_id = req.body.store_id
+    const { username, email, password1, password2 } = req.body
 
     //check empty value
-    if (!(username && email && password1 && password2 && store_id)) {
+    if (!(username && email && password1 && password2)) {
         res.status(400).json({
             code: 400,
             message: "입력되지 않은 정보가 있습니다."
@@ -76,6 +69,7 @@ export const signup = async (req: Request, res: Response) => {
     const usernameOverlabUser = await User.findOne({ where: { username } })
 
 
+    //user already exist with username
     if (usernameOverlabUser) {
         res.status(400).json({
             code: 400,
@@ -95,18 +89,6 @@ export const signup = async (req: Request, res: Response) => {
         return
     }
 
-    const registered_store = await Store.findOne({ where: { id: store_id } })
-
-    //check store id is not registered 
-    if (registered_store == null) {
-        res.status(400).json({
-            code: 400,
-            message: "등록되지 않은 매장 번호입니다, 매장 등록을 원하시면 고객센터에 문의해주세요."
-        })
-
-        return
-    }
-
 
     //hash password
     const encrypted_password = md5(password1)
@@ -120,11 +102,11 @@ export const signup = async (req: Request, res: Response) => {
         username,
         encrypted_password,
         email,
-        store_id
     })
-        .then(user => {
+        .then(buser => {
             res.status(200).json({
                 code: 200,
+                bUser
             })
         })
         .catch(err => {
@@ -134,6 +116,7 @@ export const signup = async (req: Request, res: Response) => {
                 message: err.message,
             })
         })
+
 }
 
 export const signout = (req: Request, res: Response) => {

@@ -2,23 +2,21 @@ import { sequelize } from "./index"
 import { DataTypes, NOW } from "sequelize";
 
 //store는 mufi측에서 id만 채워서 등록됨.
-const Store = sequelize.define("Store", {
-    //매장 id, mufi 측에서 등록하는 유일한 field
+const bUsers = sequelize.define("bUser", {
     id: {
         type: DataTypes.STRING,
         primaryKey: true,
     },
-    //매장 이름
-    name: {
+    //username
+    username: {
         type: DataTypes.STRING,
     },
-    //매장 주소
-    address: {
+    email: {
         type: DataTypes.STRING,
     },
-    //매장 전화번호
-    call: {
-        type: DataTypes.STRING,
+    encrypted_password: {
+        type: DataTypes.STRING(32),
+        allowNull: true,
     },
     registeredAt: {
         type: DataTypes.DATE,
@@ -26,4 +24,4 @@ const Store = sequelize.define("Store", {
     }
 })
 
-export default Store
+export default bUsers

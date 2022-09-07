@@ -1,7 +1,7 @@
 import express from "express"
 //import routers
 import { menu } from "./api/v1/routes/menu"
-import { authStore } from "./api/auth/store/route"
+import { authBUser } from "./api/auth/store/route"
 import { authUser } from "./api/auth/user/route"
 import { home } from "./api/v1/routes/home"
 
@@ -35,15 +35,14 @@ app.use(express.urlencoded({ extended: true }))
 app.use(fileupload({}))
 const sessionStore = new MySQLStore(dbConfig)
 
-console.log(dbConfig)
 app.use(session(createSessionConfig(sessionStore)))
 app.use(isAuthenticated)
-
 
 app.use("/", home)
 app.use("/api/v1/menu", menu)
 app.use("/auth/user", authUser)
-app.use("/auth/store", authStore)
+app.use("/auth/bUser", authBUser)
+
 
 
 

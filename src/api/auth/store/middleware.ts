@@ -9,6 +9,6 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
     }
     //not authenticated redirect to signin page
     else {
-        res.redirect("/auth/store/signin")
+        res.redirect("/auth/bUser/signin")
     }
 }

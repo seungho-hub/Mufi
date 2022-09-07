@@ -2,14 +2,14 @@ import { Router } from "express"
 import { renderSignin, renderSignup, signin, signup, signout } from "./controller"
 
 //"/auth/store/"
-export const authStore = Router()
+export const authBUser = Router()
 
-authStore.get("/signin", renderSignin)
+authBUser.get("/signin", renderSignin)
 
-authStore.post("/signin", signin)
+authBUser.post("/signin", signin)
 
-authStore.get("/signup", renderSignup)
+authBUser.get("/signup", renderSignup)
 
-authStore.post("/signup", signup)
+authBUser.post("/signup", signup)
 
-authStore.delete('/signout', signout)
+authBUser.delete('/signout', signout)
