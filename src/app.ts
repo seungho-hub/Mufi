@@ -1,10 +1,14 @@
 import express from "express"
 //import routers
-import { menu } from "./api/v1/routes/menu"
-import { authBUser } from "./api/auth/buser/route"
-import { authUser } from "./api/auth/user/route"
-import { home } from "./api/v1/routes/home"
 
+//user router
+import { authUser } from "./api/auth/user/route"
+
+//buser router
+import { menuRouter } from "./api/buser/routes/menu"
+import { authBUser } from "./api/auth/buser/route"
+import { homeRouter } from "./api/buser/routes/home"
+import { storeRouter } from "./api/buser/routes/store"
 
 import path from "path"
 import session from "express-session"
@@ -37,15 +41,20 @@ const sessionStore = new MySQLStore(dbConfig)
 
 app.use(session(createSessionConfig(sessionStore)))
 
+
+
+//user routing
+app.use("/auth/user", authUser)
+
+//buser routing
 //except auth router from session check middleware
 app.use("/buser", bUserAuthenticated.unless({
     path: [/\/auth\/*/],
 }))
-
-app.use("/", home)
-app.use("/api/v1/menu", menu)
-app.use("/auth/user", authUser)
+app.use("/api/buser/menu", menuRouter)
+app.use("/api/buser/store", storeRouter)
 app.use("/auth/buser", authBUser)
+app.use("/buser", homeRouter)
 
 
 

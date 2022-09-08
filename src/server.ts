@@ -1,5 +1,5 @@
 import { app } from "./app";
-import { sequelize } from "./api/v1/models"
+import { sequelize } from "./api/buser/models"
 
 const port = app.get("port");
 
@@ -37,7 +37,7 @@ function onListening() {
         typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
 
     //connect to database
-    sequelize.sync({ force: true })
+    sequelize.sync({ force: false })
         .then(() => {
             console.log("connected succefully")
         })

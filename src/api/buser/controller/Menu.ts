@@ -5,52 +5,6 @@ import path from "path"
 import mime from "mime-types"
 import { v4 } from "uuid"
 
-
-export async function getMenu(req: Request, res: Response) {
-    console.log("getting menu..")
-    //url query string으로 id가 들어온다면 단일 menu object만,
-    //query string없아 넘어왔다면 해당 user의 모든 menu object를 전송
-    const user = req.session.user;
-
-    //url query string으로 id가 지정된 경우
-    if (req.query["id"]) {
-        const singleMenu = await Menu.findOne({ where: { id: req.query["id"] } })
-
-        //해당 id로 menu를 찾는데 실패한 경우
-        if (singleMenu == null) {
-            //response with 404 not found error
-            res.status(404).json({
-                code: 404,
-                message: "Menu를 찾는데 실패했습니다"
-            })
-
-            //exit function
-            return
-        }
-
-        res.send(singleMenu)
-
-        //exit function
-        return
-    }
-
-    //url query string does not pass any parameter
-    const allMenu = await Menu.findAll({ where: { store_id: req.session.user.store_id } })
-
-    if (allMenu == null) {
-        res.status(404).json({
-            code: 404,
-            message: "empty."
-        })
-
-        //exit function
-        return
-    }
-
-    res.send(allMenu)
-    return
-}
-
 export async function createMenu(req: Request, res: Response) {
     const label = req.body.label
     if (label === undefined) {
@@ -126,6 +80,51 @@ export async function createMenu(req: Request, res: Response) {
         })
 }
 
+export async function getMenu(req: Request, res: Response) {
+    console.log("getting menu..")
+    //url query string으로 id가 들어온다면 단일 menu object만,
+    //query string없아 넘어왔다면 해당 user의 모든 menu object를 전송
+    const user = req.session.user;
+
+    //url query string으로 id가 지정된 경우
+    if (req.query["id"]) {
+        const singleMenu = await Menu.findOne({ where: { id: req.query["id"] } })
+
+        //해당 id로 menu를 찾는데 실패한 경우
+        if (singleMenu == null) {
+            //response with 404 not found error
+            res.status(404).json({
+                code: 404,
+                message: "Menu를 찾는데 실패했습니다"
+            })
+
+            //exit function
+            return
+        }
+
+        res.send(singleMenu)
+
+        //exit function
+        return
+    }
+
+    //url query string does not pass any parameter
+    const allMenu = await Menu.findAll({ where: { store_id: req.session.user.store_id } })
+
+    if (allMenu == null) {
+        res.status(404).json({
+            code: 404,
+            message: "empty."
+        })
+
+        //exit function
+        return
+    }
+
+    res.send(allMenu)
+    return
+}
+
 export async function deleteMenu(req: Request, res: Response) {
     const targetId = req.query.id
 
@@ -173,4 +172,4 @@ export async function deleteMenu(req: Request, res: Response) {
                 message: "Internel Server Error"
             })
         })
-}
+} 

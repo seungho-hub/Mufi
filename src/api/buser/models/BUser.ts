@@ -1,8 +1,9 @@
 import { sequelize } from "./index"
 import { DataTypes, NOW } from "sequelize";
+import Store from "./Store"
 
 //store는 mufi측에서 id만 채워서 등록됨.
-const bUsers = sequelize.define("bUser", {
+const BUsers = sequelize.define("bUser", {
     id: {
         type: DataTypes.STRING,
         primaryKey: true,
@@ -27,4 +28,8 @@ const bUsers = sequelize.define("bUser", {
     }
 })
 
-export default bUsers
+BUsers.hasMany(Store, {
+    foreignKey: "buser_id",
+})
+
+export default BUsers

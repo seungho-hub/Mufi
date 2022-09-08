@@ -4,5 +4,5 @@ import Store from "../models/BUser"
 
 
 export async function renderHome(req: Request, res: Response) {
-    res.send("home")
+    res.render("buser/home")
 }
