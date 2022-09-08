@@ -15,10 +15,10 @@ export const signin = async (req: Request, res: Response) => {
     const encrypted_password = md5(password)
 
 
-    let user_email_matched = await Buser.findOne({ where: { email: email } })
+    let buser_email_matched = await Buser.findOne({ where: { email: email } })
 
     // user mismatched signin failed.
-    if (user_email_matched == null) {
+    if (buser_email_matched == null) {
         //sign in failed message have to does not include reason 
         res.render("buser/signin", {
             error: "계정을 찾을 수 없습니다."
@@ -28,7 +28,7 @@ export const signin = async (req: Request, res: Response) => {
     }
 
     // user password mismatched
-    if (encrypted_password != user_email_matched.getDataValue("encrypted_password")) {
+    if (encrypted_password != buser_email_matched.getDataValue("encrypted_password")) {
         //sign in failed message have to does not include reason 
         res.render("buser/signin", {
             error: "계정을 찾을 수 없습니다."
@@ -39,10 +39,10 @@ export const signin = async (req: Request, res: Response) => {
     }
 
     //validation succededW
-    let user = user_email_matched
+    let buser = buser_email_matched
 
     //save session 
-    req.session.user = user
+    req.session.buser = buser
 
     res.redirect("/buser")
 }

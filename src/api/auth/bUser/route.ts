@@ -1,7 +1,7 @@
 import { Router } from "express"
 import { renderSignin, renderSignup, signin, signup, signout } from "./controller"
 
-//"/auth/store/"
+//"/auth/buser/"
 export const authBUser = Router()
 
 authBUser.get("/signin", renderSignin)

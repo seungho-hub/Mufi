@@ -4,9 +4,14 @@ import { DataTypes, NOW } from "sequelize";
 //store는 mufi측에서 id만 채워서 등록됨.
 const Store = sequelize.define("Store", {
     //매장 uuid
+    id: {
+        type: DataTypes.STRING(32),
+        primaryKey: true,
+    },
     code: {
         type: DataTypes.STRING,
-        primaryKey: true,
+        unique: true,
+        allowNull: false,
     },
     //매장 이름
     name: {

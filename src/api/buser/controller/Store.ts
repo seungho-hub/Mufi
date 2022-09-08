@@ -24,6 +24,7 @@ export async function createStore(req: Request, res: Response) {
 
         return
     }
+
     Store.update({
         name,
         description,
@@ -62,7 +63,30 @@ export async function createStore(req: Request, res: Response) {
 }
 
 export async function getStore(req: Request, res: Response) {
+    if (req.params.id) {
+        const store = await Store.findOne({
+            where: {
+                buser_id: req.session.buser.id
+            }
+        })
 
+        if (store == null) {
+            res.status(404).json({
+                code: 404,
+                message: "해당 id와 일치하는 매장을 찾지 못했습니다."
+            })
+            return
+        }
+
+
+        res.status(200).json(store)
+        return
+    } else {
+        res.status(400).json({
+            code: 404,
+            message: "정보를 가져올 store의 id를 지정해주세요."
+        })
+    }
 }
 
 export async function deleteStore(req: Request, res: Response) {

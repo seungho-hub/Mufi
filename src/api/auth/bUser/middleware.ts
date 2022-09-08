@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express"
 import { unless } from "express-unless"
 
 export function bUserAuthenticated(req: Request, res: Response, next: NextFunction) {
-    console.log(req.session)
     //authenticated
     //condition : client got session and user data
     if (req.session && req.session.buser) {
