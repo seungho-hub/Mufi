@@ -7,10 +7,26 @@ import { v4 } from "uuid"
 import Store from "../models/Store"
 import { ValidationError, QueryError, where } from 'sequelize';
 
+//create store with body from
+//except case
+//1.empty value exist
+//2.not registered store code by mufi
+//3.store exist with store code
+//4.updated at field of store not null
 
 export async function createStore(req: Request, res: Response) {
     //name, description, zip_code, detail_address
     const { code, name, description, zip_code, detail_address } = req.body
+
+    if((code && name && description && zip_code && detail_address) == undefined){
+        res.status(400).json({
+            code : 400,
+            message : "입력 되지 않은 필드가 있습니다."
+        })
+
+        return
+    }
+
     const buser_id = req.session.buser.id
 
     const registered_store = await Store.findOne({ where: { code: code } })
@@ -24,6 +40,16 @@ export async function createStore(req: Request, res: Response) {
 
         return
     }
+
+    if(registered_store.getDataValue("updatedAt")){
+        res.status(400).json({
+            code : 400,
+            message : "이미 등록된 매장입니다.",
+        })
+
+        return
+    }
+
 
     Store.update({
         name,
@@ -44,6 +70,7 @@ export async function createStore(req: Request, res: Response) {
             return
         })
         .catch(err => {
+            console.log(err)
             if (err instanceof ValidationError) {
                 res.status(400).json({
                     code: 400,
@@ -63,7 +90,7 @@ export async function createStore(req: Request, res: Response) {
 }
 
 export async function getStore(req: Request, res: Response) {
-    if (req.params.id) {
+    if (req.query.id) {
         const store = await Store.findOne({
             where: {
                 buser_id: req.session.buser.id
@@ -79,15 +106,142 @@ export async function getStore(req: Request, res: Response) {
         }
 
 
-        res.status(200).json(store)
-        return
-    } else {
-        res.status(400).json({
-            code: 404,
-            message: "정보를 가져올 store의 id를 지정해주세요."
+        res.status(200).json({
+            code : 200,
+            data : store
         })
+
+        return
+
+    } else {
+        const stores = await Store.findAll({
+            where : {
+                buser_id : req.session.buser.id
+            }
+        })
+
+        if(stores == null){
+            res.status(404).json({
+                code : 404,
+                message : "매장이 존재하지 않습니다."
+            })
+            
+            return
+        }
+
+        res.status(200).json({
+            code : 200,
+            data : stores,
+        })
+        return
     }
 }
 
+export async function updateStore(req:Request, res:Response){
+    const targetId = req.query.id
+
+    if(targetId == undefined){
+        res.status(400).json({
+            code : 400,
+            message : "매장의 id를 지정해주세요."
+        })
+
+        return
+    }
+    const {name, description, zip_code, detail_address } = req.body
+
+    if((name && description && zip_code && detail_address) == undefined){
+        res.status(400).json({
+            code : 400,
+            message : "입력되지 않은 필드가 존재합니다."
+        })
+        
+        return
+    }
+
+    const targetStore = await Store.findOne({where : {
+        id : targetId,
+        buser_id : req.session.buser.id
+    }})
+
+    if(targetStore == null){
+        res.status(404).json({
+            code : 404,
+            message : "매장을 찾을 수 없습니다."
+        })
+
+        return
+    }
+
+    if(targetStore.getDataValue("updatedAt") == null){
+        res.status(400).json({
+            code : 404,
+            message : "생성 보류중인 매장입니다."
+        })
+        
+        return
+    }
+
+    targetStore.update({
+        name,
+        description,
+        zip_code,
+        detail_address
+    })
+    .then((updatedStore) => {
+        res.status(200).json({
+            code : 200,
+            message : "매장 정보가 성공적으로 업데이트 됐습니다."
+        })
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).json({
+            code : 500,
+            message : "매장 정보를 업데이트하는 도중에 알 수 없는 문제가 발생했습니다."
+        })
+    })
+}
+
+//delete store
 export async function deleteStore(req: Request, res: Response) {
+    const targetId =req.query.id
+    
+    if(targetId == undefined){
+        res.status(400).json({
+            code : 400,
+            message : "삭제할 매장의 id가 지정되지 않았습니다."
+        })
+
+        return
+    }
+
+    //request를 보낸 user의 store중, target id와 일치하는 매장을 찾는다.
+    const targetStore = await Store.findOne({where : {
+        id : targetId,
+        buser_id : req.session.buser.id
+    }})
+
+    if(targetStore == null){
+        res.status(404).json({
+            code : 404,
+            message : "매장을 찾지 못했습니다."
+        })
+
+        return
+    }
+
+    targetStore.destroy()
+    .then(() => {
+        res.status(200).json({
+            code : 200,
+            message : "매장이 정상적으로 삭제되었습니다."
+        })
+    })
+    .catch(err => {
+        res.status(500).json({
+            code : 500,
+            message : "매장을 삭제하는 도중 알 수 없는 문제가 발생했습니다."
+        })
+    })
 }

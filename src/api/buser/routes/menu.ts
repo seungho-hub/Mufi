@@ -1,6 +1,6 @@
 import { Router } from "express"
-import * as menuController from "../controller/Menu"
-import { getMenu, createMenu, deleteMenu } from "../controller/Menu"
+import * as menuController from "../controller/menu"
+import { getMenu, createMenu, deleteMenu } from "../controller/menu"
 
 export const menuRouter = Router()
 
