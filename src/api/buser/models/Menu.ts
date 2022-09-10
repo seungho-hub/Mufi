@@ -29,8 +29,5 @@ const Menu = sequelize.define("Menu", {
     }
 })
 
-Menu.belongsTo(Store, {
-    foreignKey: "store_id"
-})
 
 export default Menu

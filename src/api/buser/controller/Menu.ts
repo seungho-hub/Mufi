@@ -6,31 +6,21 @@ import mime from "mime-types"
 import { v4 } from "uuid"
 
 export async function createMenu(req: Request, res: Response) {
-    const label = req.body.label
-    if (label === undefined) {
+    const store_id = req.query.store_id
+
+    if(store_id == undefined){
         res.status(400).json({
-            code: 400,
-            message: "상품의 이름을 입력해주세요"
+            code : 400,
+            message : "매장 id가 지정되지 않았습니다."
         })
-        return
     }
+    const {label, price, description} = req.body
 
-    const price = req.body.price
-    if (price === undefined) {
+    //check all input fields have value
+    if((label && price && description) == undefined){
         res.status(400).json({
-            code: 400,
-            message: "상품의 가격을 입력해주세요"
-        })
-        return
-    }
-
-    const description = req.body.description
-
-    //check any image file submited
-    if (req.files == null) {
-        res.status(400).json({
-            code: 400,
-            message: "상품의 이미지를 등록해주세요"
+            code : 400,
+            message : "입력하지 않은 필드가 있습니다."
         })
         return
     }
@@ -43,45 +33,51 @@ export async function createMenu(req: Request, res: Response) {
         })
         return
     }
-
+    
+    //type assertion as UploadFile
+    //if image file exist, can be assert upload file 
     const image: UploadedFile = req.files.image as UploadedFile
 
     const extension = mime.extension(image.mimetype)
     const filename = image.md5 + "." + extension
 
+    //serving path
     const servingPath = path.join("/images/menu", filename)
+    //upload path
     const mediaPath = path.join(process.env.PWD, "media")
-
 
     //generate uuid for id of menu
     const id = v4()
 
     image.mv(path.join(mediaPath, servingPath))
+        //image uploaded successfully
         .then(() => {
-            Menu.create({
+            //create menu
+            return Menu.create({
                 id,
                 label,
                 price,
                 image: servingPath,
-                store_id: req.session.user.store_id,
+                store_id,
                 description,
             })
-
+        })
+        .then(() => {
             res.status(200).json({
-                code: 200,
-                message: "상품이 정상적으로 등록되었습니다."
+                code : 200,
+                messag : "상품이 정상적으로 등록되었습니다."
             })
         })
+        //image upload failed
         .catch(err => {
             res.status(500).json({
                 code: 500,
-                message: "상품의 이미지를 업로드하는 도중 문제가 발생했습니다."
+                message: "상품을 등록하는 도중 문제가 발생했습니다."
             })
         })
 }
 
 export async function getMenu(req: Request, res: Response) {
-    console.log("getting menu..")
     //url query string으로 id가 들어온다면 단일 menu object만,
     //query string없아 넘어왔다면 해당 user의 모든 menu object를 전송
     const user = req.session.user;

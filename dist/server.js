@@ -29,12 +29,12 @@ function onListening() {
     const addr = server.address();
     const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
     //connect to database
-    models_1.sequelize.sync({ force: true })
+    models_1.sequelize.sync({ force: false })
         .then(() => {
         console.log("connected succefully");
     })
         .catch(err => {
-        console.log("connect failed");
+        console.log("connect failed : ", err);
     });
 }
 exports.default = server;

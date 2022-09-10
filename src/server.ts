@@ -37,12 +37,12 @@ function onListening() {
         typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
 
     //connect to database
-    sequelize.sync({ force: true })
+    sequelize.sync({ force: false })
         .then(() => {
             console.log("connected succefully")
         })
         .catch(err => {
-            console.log("connect failed")
+            console.log("connect failed : ", err)
         })
 
 }
