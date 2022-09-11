@@ -9,7 +9,7 @@
     "private": false,
     "scripts": {
         "dev": "concurrently \"tsc --watch\" \"yarn nodemon\"",
-        "test": "yarn mocha dist/api/test/buser/",
+        "test": "yarn mocha --exit dist/api/test/buser/",
         "watch-ts": "tsc --watch",
         "watch-app": "yarn nodemon"
     },

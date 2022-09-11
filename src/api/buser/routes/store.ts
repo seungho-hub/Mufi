@@ -6,7 +6,7 @@ export const storeRouter = Router()
 
 //
 storeRouter.use(checkStoreAuthroize.unless({
-    method : ["POST"]
+    method: ["GET", "POST"]
 }))
 storeRouter.get("/", getStore)
 storeRouter.post("/", createStore)

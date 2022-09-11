@@ -44,11 +44,15 @@ const Store = sequelize.define("Store", {
     updatedAt: {
         type: DataTypes.DATE,
         defaultValue: NOW
+    },
+    registered: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 })
 
 Store.hasMany(Menu, {
-    foreignKey : "store_id"
+    foreignKey: "store_id"
 })
 
 export default Store
