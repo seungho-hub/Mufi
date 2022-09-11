@@ -9,9 +9,16 @@ export const renderSignin = async (req: Request, res: Response) => {
 }
 
 export const signin = async (req: Request, res: Response) => {
-    const email = req.body.email
-    const password = req.body.password
+    const {email, password} = req.body
 
+    if((email && password) == undefined){
+        res.status(400).json({
+            code : 400,
+            message : "입력되지 않은 필드값이 존재합니다."
+        })
+
+        return
+    }
     const encrypted_password = md5(password)
 
 
@@ -20,7 +27,7 @@ export const signin = async (req: Request, res: Response) => {
     // user mismatched signin failed.
     if (buser_email_matched == null) {
         //sign in failed message have to does not include reason 
-        res.render("buser/signin", {
+        res.status(401).render("buser/signin", {
             error: "계정을 찾을 수 없습니다."
         })
 
@@ -30,7 +37,7 @@ export const signin = async (req: Request, res: Response) => {
     // user password mismatched
     if (encrypted_password != buser_email_matched.getDataValue("encrypted_password")) {
         //sign in failed message have to does not include reason 
-        res.render("buser/signin", {
+        res.status(401).render("buser/signin", {
             error: "계정을 찾을 수 없습니다."
         })
 
