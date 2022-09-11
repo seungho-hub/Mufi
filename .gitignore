@@ -4,3 +4,4 @@ node_modules/
 yarn-error.log
 dist/
 media/images/menu/
+src/.DS_Store
