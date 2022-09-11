@@ -42,15 +42,21 @@ const sessionStore = new MySQLStore(dbConfig)
 app.use(session(createSessionConfig(sessionStore)))
 
 
-
+//--------------------------------------
 //user routing
 app.use("/auth/user", authUser)
 
+
+
+
+
 //buser routing
-//except auth router from session check middleware
-app.use("/buser", bUserAuthenticated.unless({
-    path: [/\/auth\/*/],
-}))
+//for api
+app.use("/api/buser", bUserAuthenticated)
+//for home
+app.use("/buser", bUserAuthenticated)
+//about authentication, does not use middleware even signout
+
 app.use("/api/buser/menu", menuRouter)
 app.use("/api/buser/store", storeRouter)
 app.use("/auth/buser", authBUser)
