@@ -26,7 +26,7 @@ export const signin = async (req: Request, res: Response) => {
     // user mismatched signin failed.
     if (buser_email_matched == null) {
         //sign in failed message have to does not include reason 
-        res.status(401).render("buser/signin", {
+        res.status(401).render("buser/auth/signin", {
             error: "계정을 찾을 수 없습니다."
         })
 
@@ -53,7 +53,7 @@ export const signin = async (req: Request, res: Response) => {
     //save session 
     req.session.buser = buser
 
-    res.redirect("/buser")
+    res.redirect("/buser/home")
 }
 
 export const renderSignup = (req: Request, res: Response) => {

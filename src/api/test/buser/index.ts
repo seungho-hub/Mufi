@@ -135,7 +135,7 @@ if (server.listening) {
             //signin된 상태에서 home에 접근했을때 
             it("home:test_user", (done) => {
                 agent
-                    .get("/buser")
+                    .get("/buser/home")
                     .end((err, res) => {
                         expect(err).to.be.null
                         //authenticationn에 성공해 redirect되지 않음
