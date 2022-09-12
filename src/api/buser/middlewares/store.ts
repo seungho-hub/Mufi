@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import { unless } from "express-unless"
-import Store from "../models/Store"
+import Store from "../../models/Store"
 
 //store authrize check middleware
 //1.store api에는 모두 store_id가 querystring으로 들어가야 함.

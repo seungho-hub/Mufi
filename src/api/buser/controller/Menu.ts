@@ -1,12 +1,12 @@
 import { Request, Response } from "express"
 import { UploadedFile } from "express-fileupload";
-import Menu from "../models/Menu";
+import Menu from "../../models/Menu";
 import path from "path"
 import mime from "mime-types"
 import { v4 } from "uuid"
 
 import { Model } from "sequelize/types"
-import Store from "../models/Store"
+import Store from "../../models/Store"
 
 export async function createMenu(req: Request, res: Response) {
     const store_id = req.query.store_id

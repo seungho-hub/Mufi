@@ -1,11 +1,11 @@
-import User from "../../buser/models/User"
-import Buser from "../../buser/models/BUser"
+import User from "../../models/User"
+import Buser from "../../models/BUser"
 import { v4 } from "uuid"
 import md5 from "md5"
 import { Request, Response } from "express"
 
 export const renderSignin = async (req: Request, res: Response) => {
-    res.render("buser/signin")
+    res.render("buser/auth/signin")
 }
 
 export const signin = async (req: Request, res: Response) => {
@@ -57,7 +57,7 @@ export const signin = async (req: Request, res: Response) => {
 }
 
 export const renderSignup = (req: Request, res: Response) => {
-    res.render("buser/signup")
+    res.render("buser/auth/signup")
 }
 
 export const signup = async (req: Request, res: Response) => {
@@ -77,17 +77,15 @@ export const signup = async (req: Request, res: Response) => {
 
     //user already exist with username
     if (usernameOverlabUser) {
-        res.status(400).render("buser/signup", {
+        res.status(400).render("buser/auth/signup", {
             error: "이미 등록된 사용자 이름 입니다."
         })
-
-        console.log("이미 등록된 사용자")
         return
     }
 
     //check password mismatch
     if (password1 != password2) {
-        res.status(400).render("buser/signup", {
+        res.status(400).render("buser/auth/signup", {
             error: "비밀번호가 일치하지 않습니다."
         })
         return

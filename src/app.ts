@@ -7,8 +7,10 @@ import { authUser } from "./api/auth/user/route"
 //buser router
 import { menuRouter } from "./api/buser/routes/menu"
 import { authBUser } from "./api/auth/buser/route"
-import { homeRouter } from "./api/buser/routes/home"
+import { bUserRouter } from "./api/buser/routes"
 import { storeRouter } from "./api/buser/routes/store"
+
+import { userHomeRouter } from "./api/user/routes/home"
 
 import path from "path"
 import session from "express-session"
@@ -16,6 +18,7 @@ import dbConfig from "./api/config/DBConfig"
 import createSessionConfig from "./api/config/SessionConfig"
 const MySQLStore = require("express-mysql-session")(session)
 import { bUserAuthenticated } from "./api/auth/bUser/middleware"
+import { userAuthenticated } from "./api/auth/user/middleware"
 import fileupload from "express-fileupload"
 
 export const app = express()
@@ -44,23 +47,28 @@ app.use(session(createSessionConfig(sessionStore)))
 
 //--------------------------------------
 //user routing
+app.use("/user/", userAuthenticated)
+//for api
+app.use("/api/user", userAuthenticated)
+
 app.use("/auth/user", authUser)
+app.use("/user/", userHomeRouter)
 
 
 
 
 
 //buser routing
-//for api
-app.use("/api/buser", bUserAuthenticated)
+
 //for home
 app.use("/buser", bUserAuthenticated)
-//about authentication, does not use middleware even signout
+//for api
+app.use("/api/buser", bUserAuthenticated)
+app.use("/auth/buser", authBUser)
+app.use("/buser", bUserRouter)
 
 app.use("/api/buser/menu", menuRouter)
 app.use("/api/buser/store", storeRouter)
-app.use("/auth/buser", authBUser)
-app.use("/buser", homeRouter)
 
 
 

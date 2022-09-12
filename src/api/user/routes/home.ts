@@ -1,5 +1,5 @@
 import { Router } from "express"
 import { renderHome } from "../controller/home"
-export const homeRouter = Router()
+export const userHomeRouter = Router()
 
-homeRouter.get("/", renderHome)
+userHomeRouter.get("/", renderHome)
