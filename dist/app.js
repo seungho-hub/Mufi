@@ -11,14 +11,16 @@ const route_1 = require("./api/auth/user/route");
 //buser router
 const menu_1 = require("./api/buser/routes/menu");
 const route_2 = require("./api/auth/buser/route");
-const home_1 = require("./api/buser/routes/home");
+const routes_1 = require("./api/buser/routes");
 const store_1 = require("./api/buser/routes/store");
+const home_1 = require("./api/user/routes/home");
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
 const DBConfig_1 = __importDefault(require("./api/config/DBConfig"));
 const SessionConfig_1 = __importDefault(require("./api/config/SessionConfig"));
 const MySQLStore = require("express-mysql-session")(express_session_1.default);
 const middleware_1 = require("./api/auth/bUser/middleware");
+const middleware_2 = require("./api/auth/user/middleware");
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 exports.app = (0, express_1.default)();
 //set port number
@@ -37,15 +39,18 @@ const sessionStore = new MySQLStore(DBConfig_1.default);
 exports.app.use((0, express_session_1.default)((0, SessionConfig_1.default)(sessionStore)));
 //--------------------------------------
 //user routing
-exports.app.use("/auth/user", route_1.authUser);
-//buser routing
+exports.app.use("/user/", middleware_2.userAuthenticated);
 //for api
-exports.app.use("/api/buser", middleware_1.bUserAuthenticated);
+exports.app.use("/api/user", middleware_2.userAuthenticated);
+exports.app.use("/auth/user", route_1.authUser);
+exports.app.use("/user/", home_1.userHomeRouter);
+//buser routing
 //for home
 exports.app.use("/buser", middleware_1.bUserAuthenticated);
-//about authentication, does not use middleware even signout
+//for api
+exports.app.use("/api/buser", middleware_1.bUserAuthenticated);
+exports.app.use("/auth/buser", route_2.authBUser);
+exports.app.use("/buser", routes_1.bUserRouter);
 exports.app.use("/api/buser/menu", menu_1.menuRouter);
 exports.app.use("/api/buser/store", store_1.storeRouter);
-exports.app.use("/auth/buser", route_2.authBUser);
-exports.app.use("/buser", home_1.homeRouter);
 //# sourceMappingURL=app.js.map

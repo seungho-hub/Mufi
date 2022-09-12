@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./app");
-const models_1 = require("./api/buser/models");
+const models_1 = require("./api/models");
 const port = app_1.app.get("port");
 const server = app_1.app.listen(port, process.env.HOST, onListening);
 server.on("error", onError);
