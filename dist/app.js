@@ -35,13 +35,15 @@ exports.app.use(express_1.default.urlencoded({ extended: true }));
 exports.app.use((0, express_fileupload_1.default)({}));
 const sessionStore = new MySQLStore(DBConfig_1.default);
 exports.app.use((0, express_session_1.default)((0, SessionConfig_1.default)(sessionStore)));
+//--------------------------------------
 //user routing
 exports.app.use("/auth/user", route_1.authUser);
 //buser routing
-//except auth router from session check middleware
-exports.app.use("/buser", middleware_1.bUserAuthenticated.unless({
-    path: [/\/auth\/*/],
-}));
+//for api
+exports.app.use("/api/buser", middleware_1.bUserAuthenticated);
+//for home
+exports.app.use("/buser", middleware_1.bUserAuthenticated);
+//about authentication, does not use middleware even signout
 exports.app.use("/api/buser/menu", menu_1.menuRouter);
 exports.app.use("/api/buser/store", store_1.storeRouter);
 exports.app.use("/auth/buser", route_2.authBUser);
