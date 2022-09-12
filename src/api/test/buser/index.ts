@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
 })
 
 const testRawData = fs.readFileSync(`${process.env.PWD}/src/api/test/buser/data.json`)
-const { testUser, testStore, updateStore } = JSON.parse(testRawData.toString())
+const { testUser, testStore, updateStore, testMenu } = JSON.parse(testRawData.toString())
 
 const agent = chai.request.agent(server)
 
@@ -283,6 +283,91 @@ if (server.listening) {
         })
 
         describe("menu api", () => {
+            it("create menu", (done) => {
+                const image = fs.readFileSync(testMenu.image)
+
+                agent
+                    .post("/api/buser/menu")
+                    .query({
+                        store_id: testStore.id
+                    })
+                    .type("form")
+                    .field({
+                        label: testMenu.label,
+                        price: testMenu.price,
+                        description: testMenu.description,
+                    })
+                    .attach("image", image, "image.png")
+                    .end((err, res) => {
+                        testMenu.id = res.body.data.id
+                        expect(err).to.be.null
+                        expect("Location", "/api/buser/store")
+                        expect(res).to.have.status(200)
+
+                        done()
+                    })
+            })
+
+            describe("get menu", () => {
+                it("all menu of store's", (done) => {
+                    agent
+                        .get("/api/buser/menu")
+                        .query({
+                            store_id: testStore.id
+                        })
+                        .end((err, res) => {
+                            expect(err).to.be.null
+                            expect("Location", "/api/buser/store")
+                            expect(res).to.have.status(200)
+
+                            done()
+                        })
+                })
+
+                it("all menus of buser's", (done) => {
+                    agent
+                        .get("/api/buser/menu")
+                        .end((err, res) => {
+                            expect(err).to.be.null
+                            expect("Location", "/api/buser/store")
+                            expect(res).to.have.status(200)
+
+                            done()
+                        })
+                })
+
+                it("single menu", (done) => {
+                    agent
+                        .get("/api/buser/menu")
+                        .query({
+                            store_id: testStore.id,
+                            menu_id: testMenu.id
+                        })
+                        .end((err, res) => {
+                            expect(err).to.be.null
+                            expect("Location", "/api/buser/store")
+                            expect(res).to.have.status(200)
+
+                            done()
+                        })
+                })
+            })
+
+
+            it("delete menu", (done) => {
+                agent
+                    .delete("/api/buser/menu")
+                    .query({
+                        menu_id: testMenu.id
+                    })
+                    .end((err, res) => {
+                        expect(err).to.be.null
+                        expect("Location", "api/buser/store")
+                        expect(res).to.have.status(200)
+
+                        done()
+                    })
+            })
         })
     })
 }

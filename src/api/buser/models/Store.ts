@@ -6,7 +6,7 @@ import Menu from "./Menu"
 const Store = sequelize.define("Store", {
     //매장 uuid
     id: {
-        type: DataTypes.STRING(32),
+        type: DataTypes.UUID,
         primaryKey: true,
     },
     code: {
@@ -33,9 +33,8 @@ const Store = sequelize.define("Store", {
         type: DataTypes.STRING,
     },
     buser_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
-
     },
     createdAt: {
         type: DataTypes.DATE,

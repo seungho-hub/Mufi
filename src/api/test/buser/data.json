@@ -19,5 +19,11 @@
         "description": "test_updated_description",
         "zip_code": "test",
         "detail_address": "test_updated_detail_address"
+    },
+    "testMenu": {
+        "label": "test_label",
+        "price": 20000,
+        "description": "test_description",
+        "image": "C:\\Users\\seungho\\Downloads\\chicken.jpg"
     }
 }

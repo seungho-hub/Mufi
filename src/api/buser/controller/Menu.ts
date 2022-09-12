@@ -5,22 +5,19 @@ import path from "path"
 import mime from "mime-types"
 import { v4 } from "uuid"
 
+import { Model } from "sequelize/types"
+import Store from "../models/Store"
+
 export async function createMenu(req: Request, res: Response) {
     const store_id = req.query.store_id
 
-    if(store_id == undefined){
-        res.status(400).json({
-            code : 400,
-            message : "매장 id가 지정되지 않았습니다."
-        })
-    }
-    const {label, price, description} = req.body
+    const { label, price, description } = req.body
 
     //check all input fields have value
-    if((label && price && description) == undefined){
+    if ((label && price && description) == undefined) {
         res.status(400).json({
-            code : 400,
-            message : "입력하지 않은 필드가 있습니다."
+            code: 400,
+            message: "입력하지 않은 필드가 있습니다."
         })
         return
     }
@@ -33,7 +30,7 @@ export async function createMenu(req: Request, res: Response) {
         })
         return
     }
-    
+
     //type assertion as UploadFile
     //if image file exist, can be assert upload file 
     const image: UploadedFile = req.files.image as UploadedFile
@@ -60,12 +57,14 @@ export async function createMenu(req: Request, res: Response) {
                 image: servingPath,
                 store_id,
                 description,
+                buser_id: req.session.buser.id
             })
         })
-        .then(() => {
+        .then((menu) => {
             res.status(200).json({
-                code : 200,
-                messag : "상품이 정상적으로 등록되었습니다."
+                code: 200,
+                messag: "상품이 정상적으로 등록되었습니다.",
+                data: menu
             })
         })
         //image upload failed
@@ -77,57 +76,95 @@ export async function createMenu(req: Request, res: Response) {
         })
 }
 
+//1. store id만 지정된 경우 => 해당 store의 모든 menu
+//2. store_id, menu_id 가 지정된 경우 => 단일 menu
+//3. 아무것도 지정되지 않은 경우 => buser의 모든 menu 
 export async function getMenu(req: Request, res: Response) {
-    //url query string으로 id가 들어온다면 단일 menu object만,
-    //query string없아 넘어왔다면 해당 user의 모든 menu object를 전송
-    const user = req.session.user;
+    const targetStoreId = req.query.store_id
+    const targetMenuId = req.query.menu_id
 
-    //url query string으로 id가 지정된 경우
-    if (req.query["id"]) {
-        const singleMenu = await Menu.findOne({ where: { id: req.query["id"] } })
+    //1, store id만 지정된 경우
+    //해당 store의 모든 menu전달
+    if (targetStoreId && (targetMenuId == undefined)) {
+        const store = await Store.findOne({
+            where: {
+                id: targetStoreId,
+                buser_id: req.session.buser.id
+            },
+            include: Menu
+        })
 
-        //해당 id로 menu를 찾는데 실패한 경우
-        if (singleMenu == null) {
-            //response with 404 not found error
-            res.status(404).json({
+        if (store == null) {
+            res.status(400).json({
                 code: 404,
-                message: "Menu를 찾는데 실패했습니다"
+                message: "매장을 찾지 못했습니다."
             })
 
-            //exit function
             return
         }
 
-        res.send(singleMenu)
-
-        //exit function
-        return
-    }
-
-    //url query string does not pass any parameter
-    const allMenu = await Menu.findAll({ where: { store_id: req.session.user.store_id } })
-
-    if (allMenu == null) {
-        res.status(404).json({
-            code: 404,
-            message: "empty."
+        res.status(200).json({
+            code: 200,
+            data: store.getDataValue("Menus")
         })
 
         //exit function
         return
     }
+    //2. store_id, menu_id가 지정된 경우
+    //해당 단일 menu만 전달
+    else if (targetStoreId && targetMenuId) {
+        const targetMenu = Menu.findOne({
+            where: {
+                id: targetMenuId,
+                buser_id: req.session.buser.id
+            }
+        })
 
-    res.send(allMenu)
-    return
+        if (targetMenu == null) {
+            res.status(404).json({
+                code: 404,
+                message: "메뉴가 존재하지 않습니다."
+            })
+
+            return
+        }
+
+        res.status(200).json({
+            code: 200,
+            data: targetMenu
+        })
+
+        return
+    }
+    //3. 아무것도 지정되지 않은 경우
+    //모든 menu를 전달
+    else if ((targetStoreId || targetMenuId) == undefined) {
+        const allMenu = await Menu.findAll({ where: { buser_id: req.session.buser.id } })
+
+        res.status(200).json({
+            code: 200,
+            data: allMenu,
+        })
+
+        return
+    }
 }
 
 export async function deleteMenu(req: Request, res: Response) {
-    const targetId = req.query.id
+    const targetMenuId = req.query.menu_id
 
+    if (targetMenuId == undefined) {
+        res.status(400).json({
+            code: 400,
+            message: "메뉴의 id가 전달되지 않았습니다."
+        })
+    }
     //get target menu instance
     const targetMenu = await Menu.findOne({
         where: {
-            id: targetId,
+            id: targetMenuId,
+            buser_id: req.session.buser.id
         }
     })
 
@@ -140,19 +177,6 @@ export async function deleteMenu(req: Request, res: Response) {
 
         return
     }
-
-
-    //target menu is not registered by the user
-    if (req.session.user.store_id != targetMenu.getDataValue("store_id")) {
-        res.status(400).json({
-            code: 400,
-            message: "해당 상품에 대한 권한이 없습니다."
-        })
-
-        return
-    }
-
-
 
     //delete target menu
     targetMenu.destroy()

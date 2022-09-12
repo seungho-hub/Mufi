@@ -1,11 +1,12 @@
 import { sequelize } from "./index"
 import { DataTypes, NOW } from "sequelize";
 import Store from "./Store"
+import Menus from "./Menu"
 
 //store는 mufi측에서 id만 채워서 등록됨.
 const BUsers = sequelize.define("bUser", {
     id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         primaryKey: true,
     },
     //username
@@ -30,6 +31,10 @@ const BUsers = sequelize.define("bUser", {
 
 BUsers.hasMany(Store, {
     foreignKey: "buser_id",
+})
+
+BUsers.hasMany(Menus, {
+    foreignKey: "buser_id"
 })
 
 export default BUsers

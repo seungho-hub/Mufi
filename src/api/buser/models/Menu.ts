@@ -4,7 +4,7 @@ import Store from "./BUser"
 
 const Menu = sequelize.define("Menu", {
     id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
         primaryKey: true,
     },
@@ -24,10 +24,9 @@ const Menu = sequelize.define("Menu", {
         allowNull: false,
     },
     store_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false
     }
 })
-
 
 export default Menu
