@@ -6,10 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 //import routers
-const menu_1 = require("./api/v1/routes/menu");
-const route_1 = require("./api/auth/buser/route");
-const route_2 = require("./api/auth/user/route");
-const home_1 = require("./api/v1/routes/home");
+//user router
+const route_1 = require("./api/auth/user/route");
+//buser router
+const menu_1 = require("./api/buser/routes/menu");
+const route_2 = require("./api/auth/buser/route");
+const home_1 = require("./api/buser/routes/home");
+const store_1 = require("./api/buser/routes/store");
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
 const DBConfig_1 = __importDefault(require("./api/config/DBConfig"));
@@ -32,12 +35,15 @@ exports.app.use(express_1.default.urlencoded({ extended: true }));
 exports.app.use((0, express_fileupload_1.default)({}));
 const sessionStore = new MySQLStore(DBConfig_1.default);
 exports.app.use((0, express_session_1.default)((0, SessionConfig_1.default)(sessionStore)));
+//user routing
+exports.app.use("/auth/user", route_1.authUser);
+//buser routing
 //except auth router from session check middleware
 exports.app.use("/buser", middleware_1.bUserAuthenticated.unless({
     path: [/\/auth\/*/],
 }));
-exports.app.use("/", home_1.home);
-exports.app.use("/api/v1/menu", menu_1.menu);
-exports.app.use("/auth/user", route_2.authUser);
-exports.app.use("/auth/buser", route_1.authBUser);
+exports.app.use("/api/buser/menu", menu_1.menuRouter);
+exports.app.use("/api/buser/store", store_1.storeRouter);
+exports.app.use("/auth/buser", route_2.authBUser);
+exports.app.use("/buser", home_1.homeRouter);
 //# sourceMappingURL=app.js.map

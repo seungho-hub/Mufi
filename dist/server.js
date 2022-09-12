@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = require("./app");
-const models_1 = require("./api/v1/models");
+const models_1 = require("./api/buser/models");
 const port = app_1.app.get("port");
 const server = app_1.app.listen(port, process.env.HOST, onListening);
 server.on("error", onError);
@@ -29,12 +29,12 @@ function onListening() {
     const addr = server.address();
     const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
     //connect to database
-    models_1.sequelize.sync({ force: true })
+    models_1.sequelize.sync({ force: false })
         .then(() => {
         console.log("connected succefully");
     })
         .catch(err => {
-        console.log("connect failed");
+        console.log("connect failed : ", err);
     });
 }
 exports.default = server;

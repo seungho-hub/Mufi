@@ -1,5 +1,5 @@
-import User from "../../v1/models/User"
-import bUser from "../../v1/models/BUser"
+import User from "../../buser/models/User"
+import Buser from "../../buser/models/BUser"
 import { v4 } from "uuid"
 import md5 from "md5"
 import { Request, Response } from "express"
@@ -9,44 +9,51 @@ export const renderSignin = async (req: Request, res: Response) => {
 }
 
 export const signin = async (req: Request, res: Response) => {
-    const email = req.body.email
-    const password = req.body.password
+    const { email, password } = req.body
+    if ((email && password) == undefined) {
+        res.status(400).json({
+            code: 400,
+            message: "입력되지 않은 필드값이 존재합니다."
+        })
 
+        return
+    }
     const encrypted_password = md5(password)
 
+    let buser_email_matched = await Buser.findOne({ where: { email: email, encrypted_password } })
 
-    let user_email_matched = await bUser.findOne({ where: { email: email } })
 
     // user mismatched signin failed.
-    if (user_email_matched == null) {
+    if (buser_email_matched == null) {
         //sign in failed message have to does not include reason 
-        res.status(401).send({
-            code: 401,
-            message: "계정이 일치하지 않습니다."
+        res.status(401).render("buser/signin", {
+            error: "계정을 찾을 수 없습니다."
         })
 
         return
     }
 
-    // user password mismatched
-    if (encrypted_password != user_email_matched.getDataValue("encrypted_password")) {
-        //sign in failed message have to does not include reason 
-        res.status(401).send({
-            code: 401,
-            message: "계정이 일치하지 않습니다."
-        })
+    // // user password mismatched
+    // if (encrypted_password != buser_email_matched.getDataValue("encrypted_password")) {
+    //     console.log(encrypted_password, buser_email_matched.getDataValue("encrypted_password"))
+    //     //sign in failed message have to does not include reason 
+    //     res.status(401).render("buser/signin", {
+    //         error: "계정을 찾을 수 없습니다."
+    //     })
 
-        return
+    //     console.log("비밀번호가 일치하지 않습니다.")
 
-    }
+    //     return
+
+    // }
 
     //validation succededW
-    let user = user_email_matched
+    let buser = buser_email_matched
 
     //save session 
-    req.session.user = user
+    req.session.buser = buser
 
-    res.redirect("/")
+    res.redirect("/buser")
 }
 
 export const renderSignup = (req: Request, res: Response) => {
@@ -66,26 +73,23 @@ export const signup = async (req: Request, res: Response) => {
         return
     }
 
-    const usernameOverlabUser = await bUser.findOne({ where: { username } })
-
+    const usernameOverlabUser = await Buser.findOne({ where: { username } })
 
     //user already exist with username
     if (usernameOverlabUser) {
-        res.status(400).json({
-            code: 400,
-            message: "이미 등록된 사용자 이름 입니다."
+        res.status(400).render("buser/signup", {
+            error: "이미 등록된 사용자 이름 입니다."
         })
 
+        console.log("이미 등록된 사용자")
         return
     }
 
     //check password mismatch
     if (password1 != password2) {
-        res.status(400).json({
-            code: 400,
-            message: "비밀번호 확인이 일치하지 않습니다.",
+        res.status(400).render("buser/signup", {
+            error: "비밀번호가 일치하지 않습니다."
         })
-
         return
     }
 
@@ -97,7 +101,7 @@ export const signup = async (req: Request, res: Response) => {
     const id = v4()
 
 
-    bUser.create({
+    Buser.create({
         id,
         username,
         encrypted_password,
@@ -109,13 +113,11 @@ export const signup = async (req: Request, res: Response) => {
             res.redirect("/auth/buser/signin")
         })
         .catch(err => {
-            console.log(err)
             res.status(400).json({
                 code: 400,
                 message: err.message,
             })
         })
-
 }
 
 export const signout = (req: Request, res: Response) => {
