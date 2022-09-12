@@ -14,13 +14,7 @@ const User = sequelize.define("User", {
         //korean 12lenght username => 36byte
         type: DataTypes.STRING(36),
         allowNull: false,
-        validate: {
-            len: {
-                args: [4, 12],
-                msg: "username은 4글자 이상 12글자 이하여야 합니다."
-            }
-        },
-        unique: true,
+        unique: false,
     },
     pfp: {
         type: DataTypes.STRING,

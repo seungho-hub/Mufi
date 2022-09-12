@@ -1,5 +1,5 @@
 import { app } from "./app";
-import { sequelize } from "./api/buser/models"
+import { sequelize } from "./api/models"
 
 const port = app.get("port");
 

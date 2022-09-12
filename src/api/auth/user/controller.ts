@@ -1,6 +1,11 @@
 import axios from "axios";
 import * as qs from "qs";
 import { Request, Response } from "express"
+import dotenv from "dotenv"
+dotenv.config()
+
+import User from "../../models/User"
+import { CreateOptions, Optional } from "sequelize";
 
 const Errors = {
     getProfileError: new Error("failed get profile from api server")
@@ -55,8 +60,29 @@ export async function oauthSinginCallback(req: Request, res: Response) {
     //get user profile from oauth server
     let profile = await getUserProfile({ code: code.toString(), provider })
 
-    // req.session.client = 
-    res.send(profile)
+    const existUser = await User.findOne({
+        where: {
+            id: profile.id
+        }
+    })
+
+    if (existUser) {
+        req.session.user = existUser
+        res.redirect("/user")
+    } else {
+        User.create(profile)
+            .then((created_user) => {
+                req.session.user = created_user
+
+                res.redirect("/user")
+            })
+            .catch(err => {
+                res.status(400).json({
+                    code: 400,
+                    message: "oauth 인증에 실패했습니다."
+                })
+            })
+    }
 }
 
 
@@ -95,7 +121,7 @@ const api_info: API_INFO = {
         // scope: undefined, //kakao는 default로 id, username, email, pfp를 모두 허용
 
         //Authorization code를 전송받을 url, token은 redirect_url로 명시만
-        redirect_url: "http://localhost:8000/auth/client/kakao/callback",
+        redirect_url: "http://localhost/auth/user/signin/kakao/callback",
     }
 }
 
@@ -203,7 +229,7 @@ export function getAuthCodeURL(provider: provider): string {
 }
 
 //get user information from oauth api server with authorization code
-export function getUserProfile(auth_code: authorization_code) {
+export function getUserProfile(auth_code: authorization_code): Promise<Optional<any, string>> {
     return new Promise((resolve, reject) => {
         getTokens(auth_code)
             .then((token_resp) => {

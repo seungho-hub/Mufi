@@ -1,10 +1,10 @@
 import { Request, Response } from "express"
 import { UploadedFile } from "express-fileupload";
-import Menu from "../models/Menu";
+import Menu from "../../models/Menu";
 import path from "path"
 import mime from "mime-types"
 import { v4 } from "uuid"
-import Store from "../models/Store"
+import Store from "../../models/Store"
 import { ValidationError, QueryError, where } from 'sequelize';
 
 //create store with body from
