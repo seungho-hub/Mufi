@@ -121,7 +121,7 @@ const api_info: API_INFO = {
         // scope: undefined, //kakao는 default로 id, username, email, pfp를 모두 허용
 
         //Authorization code를 전송받을 url, token은 redirect_url로 명시만
-        redirect_url: "http://localhost/auth/user/signin/kakao/callback",
+        redirect_url: `http://${process.env.HOST}/auth/user/signin/kakao/callback`,
     }
 }
 
