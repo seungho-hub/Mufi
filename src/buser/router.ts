@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { renderHome, renderMenu, renderStore } from "../controller"
+import { renderHome, renderMenu, renderStore } from "."
 
 export const bUserRouter = Router()
 

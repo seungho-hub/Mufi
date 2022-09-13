@@ -19,6 +19,7 @@ const connection = mysql.createConnection({
 })
 
 const testRawData = fs.readFileSync(`${process.env.PWD}/src/api/test/buser/data.json`)
+
 const { testUser, testStore, updateStore, testMenu } = JSON.parse(testRawData.toString())
 
 const agent = chai.request.agent(server)

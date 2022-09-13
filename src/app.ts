@@ -7,10 +7,10 @@ import { authUser } from "./api/auth/user/route"
 //buser router
 import { menuRouter } from "./api/buser/routes/menu"
 import { authBUser } from "./api/auth/buser/route"
-import { bUserRouter } from "./api/buser/routes"
+import { bUserRouter } from "./buser/router"
 import { storeRouter } from "./api/buser/routes/store"
 
-import { userHomeRouter } from "./api/user/routes/home"
+import { userHomeRouter } from "./user/router"
 
 import path from "path"
 import session from "express-session"
