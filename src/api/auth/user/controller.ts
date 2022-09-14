@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 dotenv.config()
 
 import User from "../../models/User"
+import Payment from "../../models/Payment"
 import { CreateOptions, Optional } from "sequelize";
 
 const Errors = {
@@ -60,6 +61,7 @@ export async function oauthSinginCallback(req: Request, res: Response) {
     //get user profile from oauth server
     let profile = await getUserProfile({ code: code.toString(), provider })
 
+    //잘못된 접근이면 이전 과정에서 error가 발생하기 떄문에 id로 체크해도 문제가 되지 않는다.
     const existUser = await User.findOne({
         where: {
             id: profile.id
@@ -74,9 +76,15 @@ export async function oauthSinginCallback(req: Request, res: Response) {
             .then((created_user) => {
                 req.session.user = created_user
 
+                return Payment.create({
+                    user_id: created_user.get("id")
+                })
+            })
+            .then(() => {
                 res.redirect("/user")
             })
             .catch(err => {
+                throw err
                 res.status(400).json({
                     code: 400,
                     message: "oauth 인증에 실패했습니다."
@@ -238,6 +246,7 @@ export function getUserProfile(auth_code: authorization_code): Promise<Optional<
                 return api_info[auth_code.provider].getUserProfile(accessToken)
             })
             .then((profile) => {
+                profile.auth_code = auth_code.code
                 resolve(profile)
             })
             .catch(err => {

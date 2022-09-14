@@ -1,12 +1,14 @@
 import { sequelize } from "./index"
 import { DataTypes } from "sequelize";
 
+import Payment from "./Payment"
+
 //user는 무조건 oauth profile로 등록됨.
 //현재는 kakao oauth service만 사용중
 const User = sequelize.define("User", {
     id: {
         //uuid v4 => 36byte
-        type: DataTypes.STRING(36),
+        type: DataTypes.UUID,
         primaryKey: true,
         unique: true,
     },
@@ -26,7 +28,5 @@ const User = sequelize.define("User", {
         allowNull: false,
     },
 })
-
-
 
 export default User
