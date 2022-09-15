@@ -84,7 +84,6 @@ export async function oauthSinginCallback(req: Request, res: Response) {
                 res.redirect("/user")
             })
             .catch(err => {
-                throw err
                 res.status(400).json({
                     code: 400,
                     message: "oauth 인증에 실패했습니다."
