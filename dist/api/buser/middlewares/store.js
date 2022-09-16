@@ -1,0 +1,47 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkStoreAuthroize = void 0;
+const express_unless_1 = require("express-unless");
+const Store_1 = __importDefault(require("../../models/Store"));
+//store authrize check middleware
+//1.store api에는 모두 store_id가 querystring으로 들어가야 함.
+//2.해당 buser의 store여야 함.
+async function checkStoreAuthroize(req, res, nexst) {
+    const targetId = req.query.store_id;
+    if (targetId == undefined) {
+        res.status(400).json({
+            code: 400,
+            message: "매장 id가 입력되지 않았습니다."
+        });
+        return;
+    }
+    const targetStore = await Store_1.default.findOne({
+        where: {
+            id: targetId,
+        }
+    });
+    //targetid로 등뢱된 store가 있는지 확인한다.
+    if (targetStore == null) {
+        res.status(404).json({
+            code: 404,
+            message: "매장을 찾지 못했습니다."
+        });
+        return;
+    }
+    //request를 보내는 buser가 target store에 대한 권한이 있는지 확인한다.
+    if (targetStore.getDataValue("buser_id") != req.session.buser.id) {
+        res.status(401).json({
+            code: 401,
+            message: "해당 store에 대한 권한이 없습니다."
+        });
+        return;
+    }
+    console.log(req.session.buser.username, "의", targetStore.getDataValue("name"), "에 대한 권한이 확인되었습니다.");
+    nexst();
+}
+exports.checkStoreAuthroize = checkStoreAuthroize;
+checkStoreAuthroize.unless = express_unless_1.unless;
+//# sourceMappingURL=store.js.map

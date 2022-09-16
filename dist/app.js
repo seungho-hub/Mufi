@@ -11,9 +11,9 @@ const route_1 = require("./api/auth/user/route");
 //buser router
 const menu_1 = require("./api/buser/routes/menu");
 const route_2 = require("./api/auth/buser/route");
-const routes_1 = require("./api/buser/routes");
+const router_1 = require("./buser/router");
 const store_1 = require("./api/buser/routes/store");
-const home_1 = require("./api/user/routes/home");
+const router_2 = require("./user/router");
 const path_1 = __importDefault(require("path"));
 const express_session_1 = __importDefault(require("express-session"));
 const DBConfig_1 = __importDefault(require("./api/config/DBConfig"));
@@ -43,14 +43,14 @@ exports.app.use("/user/", middleware_2.userAuthenticated);
 //for api
 exports.app.use("/api/user", middleware_2.userAuthenticated);
 exports.app.use("/auth/user", route_1.authUser);
-exports.app.use("/user/", home_1.userHomeRouter);
+exports.app.use("/user/", router_2.userHomeRouter);
 //buser routing
 //for home
 exports.app.use("/buser", middleware_1.bUserAuthenticated);
 //for api
 exports.app.use("/api/buser", middleware_1.bUserAuthenticated);
 exports.app.use("/auth/buser", route_2.authBUser);
-exports.app.use("/buser", routes_1.bUserRouter);
+exports.app.use("/buser", router_1.bUserRouter);
 exports.app.use("/api/buser/menu", menu_1.menuRouter);
 exports.app.use("/api/buser/store", store_1.storeRouter);
 //# sourceMappingURL=app.js.map
