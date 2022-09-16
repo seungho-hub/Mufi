@@ -17,7 +17,7 @@ import session from "express-session"
 import dbConfig from "./api/config/DBConfig"
 import createSessionConfig from "./api/config/SessionConfig"
 const MySQLStore = require("express-mysql-session")(session)
-import { bUserAuthenticated } from "./api/auth/bUser/middleware"
+import { bUserAuthenticated } from "./api/auth/buser/middleware"
 import { userAuthenticated } from "./api/auth/user/middleware"
 import fileupload from "express-fileupload"
 
