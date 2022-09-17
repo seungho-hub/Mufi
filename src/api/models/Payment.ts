@@ -12,6 +12,18 @@ const Payment = sequelize.define("Payment", {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false,
+    },
+    card_company: {
+        type: DataTypes.STRING,
+    },
+    card_type: {
+        type: DataTypes.STRING,
+    },
+    card_number: {
+        type: DataTypes.STRING,
+    },
+    ownerType: {
+        type: DataTypes.STRING,
     }
 })
 
