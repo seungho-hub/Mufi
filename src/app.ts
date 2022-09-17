@@ -52,7 +52,7 @@ app.use("/user/", userAuthenticated)
 app.use("/api/user", userAuthenticated)
 
 app.use("/auth/user", authUser)
-app.use("/user/", userHomeRouter)
+app.use("/user", userHomeRouter)
 
 
 

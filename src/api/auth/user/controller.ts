@@ -6,7 +6,7 @@ dotenv.config()
 
 import User from "../../models/User"
 import Payment from "../../models/Payment"
-import { CreateOptions, Optional } from "sequelize";
+import { Optional } from "sequelize";
 
 const Errors = {
     getProfileError: new Error("failed get profile from api server")
@@ -72,15 +72,16 @@ export async function oauthSinginCallback(req: Request, res: Response) {
         req.session.user = existUser
         res.redirect("/user")
     } else {
-        User.create(profile)
+        User.create({
+            id: profile.id,
+            username: profile.username,
+            pfp: profile.pfp,
+            Payment: {
+                user_id: profile.id
+            }
+        }, { include: Payment })
             .then((created_user) => {
                 req.session.user = created_user
-
-                return Payment.create({
-                    user_id: created_user.get("id")
-                })
-            })
-            .then(() => {
                 res.redirect("/user")
             })
             .catch(err => {
