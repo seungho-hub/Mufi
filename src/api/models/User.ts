@@ -30,8 +30,11 @@ const User = sequelize.define("User", {
     },
 })
 
-User.hasOne(Payment, {
-    foreignKey: "user_id"
+User.hasMany(Payment, {
+    foreignKey: {
+        allowNull: false,
+        name: "user_id"
+    }
 })
 
 export default User

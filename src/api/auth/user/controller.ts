@@ -76,10 +76,7 @@ export async function oauthSinginCallback(req: Request, res: Response) {
             id: profile.id,
             username: profile.username,
             pfp: profile.pfp,
-            Payment: {
-                user_id: profile.id
-            }
-        }, { include: Payment })
+        })
             .then((created_user) => {
                 req.session.user = created_user
                 res.redirect("/user")

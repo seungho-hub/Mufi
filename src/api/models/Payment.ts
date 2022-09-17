@@ -4,13 +4,14 @@ import { DataTypes } from "sequelize";
 import User from "./User"
 
 const Payment = sequelize.define("Payment", {
-    user_id: {
+    id: {
         type: DataTypes.UUID,
         primaryKey: true,
     },
     toss_billing_key: {
         type: DataTypes.STRING,
         unique: true,
+        allowNull: false,
     }
 })
 
