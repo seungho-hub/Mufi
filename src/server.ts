@@ -1,6 +1,6 @@
 import { app } from "./app";
 import { sequelize } from "./api/models"
-
+const expressListRoutes = require("express-list-routes")
 const port = app.get("port");
 
 const server = app.listen(port, process.env.HOST, onListening);
@@ -8,6 +8,8 @@ const server = app.listen(port, process.env.HOST, onListening);
 server.on("error", onError);
 
 server.on("close", sequelize.close)
+
+console.log(expressListRoutes(app))
 
 function onError(error: NodeJS.ErrnoException) {
     if (error.syscall !== "listen") {
