@@ -22,7 +22,7 @@ const Payment = sequelize.define("Payment", {
     card_number: {
         type: DataTypes.STRING,
     },
-    ownerType: {
+    card_owner_type: {
         type: DataTypes.STRING,
     }
 })
