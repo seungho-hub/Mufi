@@ -1,6 +1,7 @@
 import { sequelize } from "./index"
 import { DataTypes, NOW } from "sequelize";
 import Menu from "./Menu"
+import SIN from "./Sin";
 
 //store는 mufi측에서 id만 채워서 등록됨.
 const Store = sequelize.define("Store", {
@@ -51,6 +52,10 @@ const Store = sequelize.define("Store", {
 })
 
 Store.hasMany(Menu, {
+    foreignKey: "store_id"
+})
+
+Store.hasOne(SIN, {
     foreignKey: "store_id"
 })
 

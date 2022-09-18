@@ -9,7 +9,8 @@ import { menuRouter } from "./api/buser/routes/menu"
 import { authBUser } from "./api/auth/buser/route"
 import { bUserRouter } from "./buser/router"
 import { storeRouter } from "./api/buser/routes/store"
-
+import { kioskRouter } from "./kiosk/router"
+import { sinRouter } from "./api/buser/routes/sin"
 import { userHomeRouter } from "./user/router"
 
 import path from "path"
@@ -55,9 +56,7 @@ app.use("/auth/user", authUser)
 app.use("/user", userHomeRouter)
 
 
-
-
-
+//--------------------------------------
 //buser routing
 
 //for home
@@ -69,6 +68,10 @@ app.use("/buser", bUserRouter)
 
 app.use("/api/buser/menu", menuRouter)
 app.use("/api/buser/store", storeRouter)
+app.use("/api/buser/sin", sinRouter)
+
+//--------------------------------------
+app.use("/kiosk", kioskRouter)
 
 
 

@@ -8,6 +8,7 @@
     "license": "MIT",
     "private": false,
     "scripts": {
+        "start": "node dist/server.js",
         "dev": "concurrently \"tsc --watch\" \"yarn nodemon\"",
         "test": "yarn mocha --exit dist/api/test/buser/",
         "watch-ts": "tsc --watch",
@@ -24,6 +25,7 @@
         "express-mysql-session": "^2.1.8",
         "express-session": "^1.17.3",
         "express-unless": "^2.1.1",
+        "generate-pincode": "^6.0.0",
         "isemail": "^3.2.0",
         "md5": "^2.3.0",
         "mime-types": "^2.1.35",
