@@ -34,8 +34,15 @@ export const generateSin = async (req: Request, res: Response) => {
             //5분 뒤에 제거
             //server가 종료될 경우 삭제되지 않는데, 이는 db schedular에 의해서 하루 뒤에 삭제될 거임.
             setTimeout(() => {
-                sin.destroy()
-            }, 300000)
+                createdSin.destroy()
+                .then(() => {
+                    console.log("sin expired!")
+                })
+                .catch((err) => {
+                    throw err
+                })
+                
+            }, 3000)
 
             res.json({
                 code: 200,
