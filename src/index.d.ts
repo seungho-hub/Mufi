@@ -13,6 +13,6 @@ declare module 'express-session' {
     export interface SessionData {
         user: { [key: string]: any };
         buser: { [key: string]: any };
-        client: { [key: string]: any }
+        kiosk: { [key: string]: any };
     }
 }
