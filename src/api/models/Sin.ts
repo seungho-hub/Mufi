@@ -6,6 +6,10 @@ const SIN = sequelize.define("SIN", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    store_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    }
 }, {
     updatedAt: false,
 })
