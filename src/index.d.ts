@@ -13,6 +13,9 @@ declare module 'express-session' {
     export interface SessionData {
         user: { [key: string]: any };
         buser: { [key: string]: any };
-        kiosk: { [key: string]: any };
+        kiosk: {
+            store_id: string,
+            user_id: string,
+        }
     }
 }
