@@ -11,10 +11,17 @@
 <body>
     <h1>Kiosk Home</h1>
 
-    <form action="/kiosk/authorization" method="POST">
-        <input name="pincode" type="password" inputmode="numeric" maxlength="4">
-    </form>
-
+    <% for (var menu of menus) { %>
+        <h3>
+            <%= menu.label %>
+        </h3>
+        <h6>
+            <%= menu.description %>
+                </h2>
+                <h5>
+                    <%= menu.price %>
+                        </h4>
+                        <% }  %>
 </body>
 
 </html>
