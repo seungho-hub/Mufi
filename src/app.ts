@@ -10,8 +10,10 @@ import { authBUser } from "./api/auth/buser/route"
 import { bUserRouter } from "./buser/router"
 import { storeRouter } from "./api/buser/routes/store"
 import { kioskRouter } from "./kiosk/router"
+import { kioskAuthRouter } from "./api/auth/kiosk/route"
 import { sinRouter } from "./api/buser/routes/sin"
 import { userHomeRouter } from "./user/router"
+import { uinRouter } from "./api/user/routes/uin"
 
 import path from "path"
 import session from "express-session"
@@ -21,6 +23,7 @@ const MySQLStore = require("express-mysql-session")(session)
 import { bUserAuthenticated } from "./api/auth/buser/middleware"
 import { userAuthenticated } from "./api/auth/user/middleware"
 import fileupload from "express-fileupload"
+import { checkGotStoreAuthorization, checkGotUserAuthorization } from "./api/auth/kiosk/middleware"
 
 export const app = express()
 
@@ -52,8 +55,10 @@ app.use("/user/", userAuthenticated)
 //for api
 app.use("/api/user", userAuthenticated)
 
+app.use
 app.use("/auth/user", authUser)
 app.use("/user", userHomeRouter)
+app.use("/api/user/uin", uinRouter)
 
 
 //--------------------------------------
@@ -71,7 +76,12 @@ app.use("/api/buser/store", storeRouter)
 app.use("/api/buser/sin", sinRouter)
 
 //--------------------------------------
+app.use("/kiosk", checkGotStoreAuthorization)
+app.use("/kiosk", checkGotUserAuthorization)
 app.use("/kiosk", kioskRouter)
+
+
+app.use("/auth/kiosk", kioskAuthRouter)
 
 
 
