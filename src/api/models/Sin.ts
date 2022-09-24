@@ -7,7 +7,7 @@ const SIN = sequelize.define("SIN", {
         allowNull: false,
     },
     store_id: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
     }
 }, {
