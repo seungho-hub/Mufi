@@ -1,9 +1,7 @@
-import { Router, Request, Response } from "express"
+import { Router } from "express"
+import { renderHome } from "./index"
+
 export const kioskRouter = Router()
-import AuthorizationRouter from "./routes/authorization"
 
-kioskRouter.get("/", (req: Request, res: Response) => {
-    res.render("kiosk/home")
-})
+kioskRouter.get("/", renderHome)
 
-kioskRouter.use("/authorization", AuthorizationRouter)
