@@ -57,7 +57,9 @@ export const signin = async (req: Request, res: Response) => {
 }
 
 export const renderSignup = (req: Request, res: Response) => {
-    res.render("buser/auth/signup")
+    res.render("buser/auth/signup", {
+        error: undefined
+    })
 }
 
 export const signup = async (req: Request, res: Response) => {
