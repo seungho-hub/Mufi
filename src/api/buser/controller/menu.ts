@@ -23,7 +23,7 @@ export async function createMenu(req: Request, res: Response) {
     }
 
     //check menu image submitted
-    if (req.files.image == undefined) {
+    if (req.files == null) {
         res.status(400).json({
             code: 400,
             message: "상품의 이미자가 제출되지 않았습니다."
@@ -114,7 +114,6 @@ export async function getMenu(req: Request, res: Response) {
     //2. store_id, menu_id가 지정된 경우
     //해당 단일 menu만 전달
     else if (targetStoreId && targetMenuId) {
-        console.log(targetMenuId, targetStoreId, req.session.buser.id)
         const targetMenu = await Menu.findOne({
             where: {
                 id: targetMenuId,
