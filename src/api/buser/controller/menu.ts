@@ -114,9 +114,11 @@ export async function getMenu(req: Request, res: Response) {
     //2. store_id, menu_id가 지정된 경우
     //해당 단일 menu만 전달
     else if (targetStoreId && targetMenuId) {
-        const targetMenu = Menu.findOne({
+        console.log(targetMenuId, targetStoreId, req.session.buser.id)
+        const targetMenu = await Menu.findOne({
             where: {
                 id: targetMenuId,
+                store_id: targetStoreId,
                 buser_id: req.session.buser.id
             }
         })
@@ -159,6 +161,8 @@ export async function deleteMenu(req: Request, res: Response) {
             code: 400,
             message: "메뉴의 id가 전달되지 않았습니다."
         })
+
+        return
     }
     //get target menu instance
     const targetMenu = await Menu.findOne({

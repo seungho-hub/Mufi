@@ -95,7 +95,7 @@ export async function getStore(req: Request, res: Response) {
     if (targetId) {
         const store = await Store.findOne({
             where: {
-                buser_id: req.session.buser.id
+                id: targetId,
             }
         })
 
