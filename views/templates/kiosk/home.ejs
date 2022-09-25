@@ -8,20 +8,52 @@
     <title>Document</title>
 </head>
 
-<body>
-    <h1>Kiosk Home</h1>
+<style>
+    .menus {
+        position: absolute;
+        top: 10%;
+        left: 20%;
+        width: 60%;
+        height: 50%;
+        box-shadow: 0 0 15px black;
+        display: flex;
+    }
+    
+    .menus .item {
+        padding: 2em;
+    }
+    
+    .menus .item img {
+        width: 10em;
+    }
+</style>
 
-    <% for (var menu of menus) { %>
-        <h3>
-            <%= menu.label %>
-        </h3>
-        <h6>
-            <%= menu.description %>
-                </h2>
-                <h5>
-                    <%= menu.price %>
-                        </h4>
-                        <% }  %>
+<body>
+    <h1>
+        <%= store.name %>
+    </h1>
+    <h2>
+        <%= user.username %>
+    </h2>
+
+
+    <div class="menus">
+        <ul>
+            <% for (var item of menu) { %>
+                <li class="item">
+                    <%= item.label %>
+                        <%= item.price %>
+                            <img src="<%= item.image %>" alt="">
+                </li>
+
+
+                <button>선택</button>
+                <% } %>
+
+        </ul>
+    </div>
+
 </body>
+
 
 </html>
