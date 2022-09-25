@@ -11,6 +11,7 @@ import { RowDataPacket } from "mysql2/typings/mysql"
 chai.use(chaiHttp)
 
 import mysql from "mysql2"
+import { step } from "mocha-steps"
 const connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -28,7 +29,7 @@ if (server.listening) {
     describe("REST API", () => {
         after(() => {
             describe("end test : signout, delete data", () => {
-                it("signout:test_user", (done) => {
+                step("signout:test_user", (done) => {
                     agent
                         .get("/auth/buser/signout")
                         .end((err, res) => {
@@ -39,7 +40,7 @@ if (server.listening) {
                         })
                 })
 
-                it("delete store", (done) => {
+                step("delete store", (done) => {
                     agent
                         .delete("/api/buser/store")
                         .query({
@@ -66,7 +67,7 @@ if (server.listening) {
                 })
             })
 
-            it("signup:test_user", (done) => {
+            step("signup:test_user", (done) => {
                 agent
                     .post("/auth/buser/signup")
                     .type("form")
@@ -84,7 +85,7 @@ if (server.listening) {
 
             })
 
-            it("signin:test_user", (done) => {
+            step("signin:test_user", (done) => {
                 agent
                     .post("/auth/buser/signin")
                     .type("form")
@@ -101,7 +102,7 @@ if (server.listening) {
                     })
             })
 
-            it("signin:email_does not exist", (done) => {
+            step("signin:email_does not exist", (done) => {
                 agent
                     .post("/auth/buser/signin")
                     .type("form")
@@ -117,7 +118,7 @@ if (server.listening) {
                     })
             })
 
-            it("signin:password_does not exist", (done) => {
+            step("signin:password_does not exist", (done) => {
                 agent
                     .post("/auth/buser/signin")
                     .type("form")
@@ -134,7 +135,7 @@ if (server.listening) {
             })
 
             //signin된 상태에서 home에 접근했을때 
-            it("home:test_user", (done) => {
+            step("home:test_user", (done) => {
                 agent
                     .get("/buser/home")
                     .end((err, res) => {
@@ -175,7 +176,7 @@ if (server.listening) {
 
             //매장 생성
             //매장 생성은 사전에 mufi에 문의해서 등록한 store code를 입력해야 가능함.
-            it("create store", (done) => {
+            step("create store", (done) => {
                 agent
                     .post("/api/buser/store")
                     .type("form")
@@ -204,7 +205,7 @@ if (server.listening) {
 
             //매장 생성 예외1.
             //=> 이미 code를 사용하여 update된 store는 다시 생성할 수 없다.
-            it("create same store", (done) => {
+            step("create same store", (done) => {
                 agent
                     .post("/api/buser/store")
                     .type("form")
@@ -232,7 +233,7 @@ if (server.listening) {
             })
 
             //buser의 store_id로 지정한 매장 정보 가져오기
-            it("get store", (done) => {
+            step("get store", (done) => {
                 agent
                     .get("/api/buser/store")
                     .query({
@@ -248,7 +249,7 @@ if (server.listening) {
             })
 
             //buser의 모든 매장 정보 가져오기
-            it("get all stores", (done) => {
+            step("get all stores", (done) => {
                 agent
                     .get("/api/buser/store")
                     .end((err, res) => {
@@ -260,7 +261,7 @@ if (server.listening) {
                     })
             })
 
-            it("update store", (done) => {
+            step("update store", (done) => {
                 agent
                     .put("/api/buser/store")
                     .query({
@@ -284,7 +285,24 @@ if (server.listening) {
         })
 
         describe("menu api", () => {
-            it("create menu", (done) => {
+            after(() => {
+                step("delete menu", (done) => {
+                    agent
+                        .delete("/api/buser/menu")
+                        .query({
+                            menu_id: testMenu.id
+                        })
+                        .end((err, res) => {
+                            console.log("done delete!")
+                            expect(err).to.be.null
+                            expect("Location", "api/buser/store")
+                            expect(res).to.have.status(200)
+
+                            done()
+                        })
+                })
+            })
+            step("create menu", (done) => {
                 const image = fs.readFileSync(testMenu.image)
 
                 agent
@@ -310,7 +328,7 @@ if (server.listening) {
             })
 
             describe("get menu", () => {
-                it("all menu of store's", (done) => {
+                step("all menu of store's", (done) => {
                     agent
                         .get("/api/buser/menu")
                         .query({
@@ -325,7 +343,7 @@ if (server.listening) {
                         })
                 })
 
-                it("all menus of buser's", (done) => {
+                step("all menus of buser's", (done) => {
                     agent
                         .get("/api/buser/menu")
                         .end((err, res) => {
@@ -337,7 +355,7 @@ if (server.listening) {
                         })
                 })
 
-                it("single menu", (done) => {
+                step("single menu", (done) => {
                     agent
                         .get("/api/buser/menu")
                         .query({
@@ -352,22 +370,6 @@ if (server.listening) {
                             done()
                         })
                 })
-            })
-
-
-            it("delete menu", (done) => {
-                agent
-                    .delete("/api/buser/menu")
-                    .query({
-                        menu_id: testMenu.id
-                    })
-                    .end((err, res) => {
-                        expect(err).to.be.null
-                        expect("Location", "api/buser/store")
-                        expect(res).to.have.status(200)
-
-                        done()
-                    })
             })
         })
     })
