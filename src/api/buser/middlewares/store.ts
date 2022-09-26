@@ -42,7 +42,6 @@ export async function checkStoreAuthroize(req: Request, res: Response, nexst: Ne
         return
     }
 
-    console.log(req.session.buser.username, "의", targetStore.getDataValue("name"), "에 대한 권한이 확인되었습니다.")
     nexst()
 }
 

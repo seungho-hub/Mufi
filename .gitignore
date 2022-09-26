@@ -2,6 +2,6 @@ node_modules/
 .history/
 .env
 yarn-error.log
-dist/
 media/images/menu/
 src/.DS_Store
+dist/
