@@ -3,6 +3,7 @@ import { DataTypes, Model } from "sequelize";
 
 import Payment from "./Payment"
 import SIN from "./Uin"
+import Order from "./Order"
 
 //user는 무조건 oauth profile로 등록됨.
 //현재는 kakao oauth service만 사용중
@@ -39,7 +40,17 @@ User.hasMany(Payment, {
 })
 
 User.hasOne(SIN, {
-    foreignKey: "user_id"
+    foreignKey: {
+        name: "user_id",
+        allowNull: false
+    }
+})
+
+User.hasMany(Order, {
+    foreignKey: {
+        name: "user_id",
+        allowNull: false
+    }
 })
 
 export default User
