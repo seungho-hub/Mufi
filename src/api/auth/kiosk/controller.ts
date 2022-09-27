@@ -41,7 +41,7 @@ export const storeAuthorization = async (req: Request, res: Response) => {
 
             req.session.kiosk.store_id = matched_sin.getDataValue("store_id")
 
-            res.redirect("/kiosk/auth/user")
+            res.redirect("/auth/kiosk/user")
         })
         .catch((err) => {
             throw err
