@@ -102,3 +102,16 @@ export const userAuthorization = async (req: Request, res: Response) => {
             throw err
         })
 }
+
+export const userUnAuthorize = async (req: Request, res: Response) => {
+    req.session.kiosk.user_id = null
+
+    res.redirect("/auth/kiosk/user")
+}
+
+export const storeUnAuthorize = async (req: Request, res: Response) => {
+    req.session.kiosk.user_id = null
+    req.session.kiosk.store_id = null
+
+    res.redirect("/auth/kiosk/store")
+}
