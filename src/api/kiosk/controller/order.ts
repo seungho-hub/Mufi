@@ -4,13 +4,13 @@ import User from "../../../api/models/User"
 import Payment from "../../../api/models/Payment"
 import { v4 } from "uuid"
 import Order from "../../../api/models/Order"
-
+import Store from "../../../api/models/Store"
 import axios from "axios"
+import { Model } from 'sequelize/types';
 
 export const order = async (req: Request, res: Response) => {
     const menuId = req.query.menu_id
 
-    console.log("menuId : ", menuId)
     if (menuId == undefined) {
         res.status(400).json({
             code: 400,
@@ -69,8 +69,7 @@ export const order = async (req: Request, res: Response) => {
                 vat,
                 method,
             } = response.data
-
-            Order.create({
+            const orderCreation = Order.create({
                 id: orderId,
                 user_id: req.session.kiosk.user_id,
                 store_id: req.session.kiosk.store_id,
@@ -85,7 +84,29 @@ export const order = async (req: Request, res: Response) => {
                 approvedAt,
 
             })
-            res.send(response.data)
+            const getStore = Store.findOne({
+                where: {
+                    id: req.session.kiosk.store_id
+                }
+            })
+
+            return Promise.all([orderCreation, getStore])
+        })
+        .then((result) => {
+            const [order, store] = result;
+
+            const hidedOrderInfo = {
+                order_name: order.get("order_name"),
+                totalAmount: order.get("totalAmount"),
+                method: order.get("method"),
+                vat: order.get("vat"),
+                store: store,
+                approvedAt: order.get("approvedAt"),
+            }
+            res.status(200).json({
+                code: 200,
+                data: hidedOrderInfo
+            })
         })
         .catch(err => {
             console.log("error : ", err)
