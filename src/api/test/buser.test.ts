@@ -4,7 +4,7 @@ const expect = chai.expect
 import "mocha"
 import * as dotenv from "dotenv"
 dotenv.config()
-import server from '../../../server'
+import server from '../../server'
 import fs from "fs"
 import { RowDataPacket } from "mysql2/typings/mysql"
 
@@ -19,14 +19,14 @@ const connection = mysql.createConnection({
     password: process.env.DB_PW,
 })
 
-const testRawData = fs.readFileSync(`${process.env.PWD}/src/api/test/buser/data.json`)
+const testRawData = fs.readFileSync(`${process.env.PWD}/src/api/test/data.json`)
 
 const { testUser, testStore, updateStore, testMenu } = JSON.parse(testRawData.toString())
 
 const agent = chai.request.agent(server)
 
 if (server.listening) {
-    describe("REST API", () => {
+    describe("Buser", () => {
         after(() => {
             describe("end test : signout, delete data", () => {
                 step("signout:test_user", (done) => {
