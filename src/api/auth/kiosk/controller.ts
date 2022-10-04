@@ -41,7 +41,7 @@ export const storeAuthorization = async (req: Request, res: Response) => {
 
             req.session.kiosk.store_id = matched_sin.getDataValue("store_id")
 
-            res.redirect("/kiosk/auth/user")
+            res.redirect("/auth/kiosk/user")
         })
         .catch((err) => {
             throw err
@@ -101,4 +101,17 @@ export const userAuthorization = async (req: Request, res: Response) => {
         .catch(err => {
             throw err
         })
+}
+
+export const userUnAuthorize = async (req: Request, res: Response) => {
+    req.session.kiosk.user_id = null
+
+    res.redirect("/auth/kiosk/user")
+}
+
+export const storeUnAuthorize = async (req: Request, res: Response) => {
+    req.session.kiosk.user_id = null
+    req.session.kiosk.store_id = null
+
+    res.redirect("/auth/kiosk/store")
 }

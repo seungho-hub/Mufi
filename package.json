@@ -10,7 +10,7 @@
     "scripts": {
         "start": "node dist/server.js",
         "dev": "concurrently \"tsc --watch\" \"yarn nodemon\"",
-        "test": "yarn mocha --exit dist/api/test/buser/",
+        "test": "yarn mocha --exit dist/api/test/*.test.js",
         "watch-ts": "tsc --watch",
         "watch-app": "yarn nodemon"
     },

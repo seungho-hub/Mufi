@@ -47,12 +47,15 @@
                 </li>
 
 
-                <button>선택</button>
+                <button><a href="/api/kiosk/order?menu_id=<%= item.id %>">결제</a></button>
                 <% } %>
 
         </ul>
     </div>
 
+    <form action="/auth/kiosk/user/signout" method="POST">
+        <button>로그아웃</button>
+    </form>
 </body>
 
 

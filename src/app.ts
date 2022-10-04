@@ -11,6 +11,7 @@ import { bUserRouter } from "./buser/router"
 import { storeRouter } from "./api/buser/routes/store"
 import { kioskRouter } from "./kiosk/router"
 import { kioskAuthRouter } from "./api/auth/kiosk/route"
+import { orderRouter } from "./api/kiosk/routes/order"
 import { sinRouter } from "./api/buser/routes/sin"
 import { userHomeRouter } from "./user/router"
 import { uinRouter } from "./api/user/routes/uin"
@@ -76,6 +77,10 @@ app.use("/api/buser/store", storeRouter)
 app.use("/api/buser/sin", sinRouter)
 
 //--------------------------------------
+app.use("/api/kiosk", checkGotStoreAuthorization)
+app.use("/api/kiosk", checkGotUserAuthorization)
+app.use("/api/kiosk/order", orderRouter)
+
 app.use("/kiosk", checkGotStoreAuthorization)
 app.use("/kiosk", checkGotUserAuthorization)
 app.use("/kiosk", kioskRouter)
