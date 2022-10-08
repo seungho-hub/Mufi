@@ -2,7 +2,7 @@
 
 ## run
 
-    yarn install --production=false
+    yarn install
     yarn run start
 
 ## test
