@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express"
 import Sin from "../../models/Sin"
 import Uin from "../../models/Uin"
+import QRCode from "qrcode"
 
 import md5 from "md5"
 
@@ -61,7 +62,16 @@ export const renderStoreAuthorization = async (req: Request, res: Response) => {
 export const renderUserAuthorization = async (req: Request, res: Response) => {
     console.log(req.session)
     if (req.session && req.session.kiosk && req.session.kiosk.store_id) {
-        res.render("kiosk/wait-user")
+        QRCode.toDataURL(`${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}/auth/kiosk/user/qr`)
+            .then((qrDataURL) => {
+                res.render("kiosk/wait-user", { qrDataURL })
+            })
+            .catch(err => {
+                res.status(500).json({
+                    code: 500,
+                    message: "qrcode를 생성하는 도중 문제가 발생했습니다."
+                })
+            })
     } else {
         res.redirect("/auth/kiosk/store")
     }
