@@ -17,10 +17,6 @@ sequelize.connectionManager.getConnection
 
 //test connection
 sequelize.authenticate()
-    //success
-    .then(() => {
-        console.log("Data authentication sucessfully completed")
-    })
     //got error
     .catch(err => {
         throw err
