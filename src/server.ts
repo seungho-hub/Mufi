@@ -7,8 +7,6 @@ const server = app.listen(port, process.env.HOST, onListening);
 
 server.on("error", onError);
 
-server.on("close", sequelize.close)
-
 console.log(expressListRoutes(app))
 
 function onError(error: NodeJS.ErrnoException) {
@@ -41,12 +39,21 @@ function onListening() {
     //connect to database
     sequelize.sync({ alter: true })
         .then(() => {
-            console.log("connected succefully")
+            if (process.env.INIT) {
+                server.close()
+                sequelize.close()
+                    .then(() => {
+                        process.exit(0)
+                    })
+                    .catch(err => {
+                        throw err
+                    })
+
+            }
         })
         .catch(err => {
             console.log("connect failed : ", err)
         })
-
 }
 
 export default server;
