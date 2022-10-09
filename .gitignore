@@ -5,3 +5,4 @@ yarn-error.log
 media/images/menu/
 src/.DS_Store
 dist/
+.DS_Store

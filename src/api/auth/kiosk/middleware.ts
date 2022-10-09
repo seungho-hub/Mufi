@@ -10,7 +10,6 @@ export const checkGotStoreAuthorization = async (req: Request, res: Response, ne
 }
 
 export const checkGotUserAuthorization = async (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.session)
     if (req.session && req.session.kiosk && req.session.kiosk.user_id) {
         return next()
     }
