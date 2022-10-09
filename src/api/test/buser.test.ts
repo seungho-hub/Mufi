@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
     password: process.env.DB_PW,
 })
 
-const testRawData = fs.readFileSync(`${process.env.PWD}/src/api/test/data.json`)
+const testRawData = fs.readFileSync(`src/api/test/data.json`)
 
 const { testUser, testStore, updateStore, testMenu } = JSON.parse(testRawData.toString())
 
@@ -303,6 +303,7 @@ if (server.listening) {
                 })
             })
             step("create menu", (done) => {
+                console.log(testMenu.image)
                 const image = fs.readFileSync(testMenu.image)
 
                 agent
@@ -317,11 +318,11 @@ if (server.listening) {
                         description: testMenu.description,
                     })
                     .attach("image", image, "image.png")
-                    .end((err, res) => {
-                        testMenu.id = res.body.data.id
+                    .end((err, res) => {                 
                         expect(err).to.be.null
                         expect("Location", "/api/buser/store")
                         expect(res).to.have.status(200)
+                        testMenu.id = res.body.data.id
 
                         done()
                     })
