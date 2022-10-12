@@ -25,6 +25,8 @@ const Payment = sequelize.define("Payment", {
     card_owner_type: {
         type: DataTypes.STRING,
     }
+}, {
+    updatedAt: false,
 })
 
 export default Payment
