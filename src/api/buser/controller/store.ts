@@ -16,8 +16,11 @@ import { ValidationError, QueryError } from 'sequelize';
 //4.updated at field of store not null
 
 export async function createStore(req: Request, res: Response) {
+    console.log("req body : ", req.body)
     //name, description, zip_code, detail_address
     const { code, name, description, zip_code, detail_address } = req.body
+
+    console.log(code, name, description, zip_code, detail_address)
 
     if ((code && name && description && zip_code && detail_address) == undefined) {
         res.status(400).json({
@@ -32,6 +35,7 @@ export async function createStore(req: Request, res: Response) {
 
     const registered_store = await Store.findOne({ where: { code } })
 
+    
     //등록된 code가 아닌 경우
     if (registered_store == null) {
         res.status(400).json({
