@@ -48,7 +48,15 @@ const Store = sequelize.define("Store", {
     registered: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
-    }
+    },
+
+}, {
+    indexes: [
+        {
+            fields: ["buser_id"],
+            unique: false,
+        }
+    ]
 })
 
 Store.hasMany(Menu, {
