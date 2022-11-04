@@ -1,11 +1,12 @@
 import { Request, Response } from "express"
 import { UploadedFile } from "express-fileupload";
 import Menu from "../../models/Menu";
+import Order from "../../models/Order"
 import path from "path"
 import mime from "mime-types"
 import { v4 } from "uuid"
 import Store from "../../models/Store"
-import { ValidationError, QueryError, where } from 'sequelize';
+import { ValidationError, QueryError } from 'sequelize';
 
 //create store with body from
 //except case
@@ -253,6 +254,41 @@ export async function deleteStore(req: Request, res: Response) {
             res.status(500).json({
                 code: 500,
                 message: "매장을 삭제하는 도중 알 수 없는 문제가 발생했습니다."
+            })
+        })
+}
+
+//get order from store
+export async function getOrderOfStore(req: Request, res: Response) {
+    const targetStoreId = req.query.store_id
+
+    if (targetStoreId == undefined) {
+        res.status(400).json({
+            code: 400,
+            message: "store id가 지정되지 않았습니다."
+        })
+
+        return
+    }
+
+    Order.findAll({
+        where: {
+            store_id: targetStoreId,
+        }
+    })
+        .then((orders) => {
+            res.status(200).json({
+                code: 200,
+                data: {
+                    orders
+                }
+            })
+        })
+        .catch(err => {
+            throw err
+            res.status(500).json({
+                code: 500,
+                message: "server internel error"
             })
         })
 }
