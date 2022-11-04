@@ -1,5 +1,8 @@
 const storeList = document.querySelector("#store-list");
 const tableData = document.querySelector("#table-data");
+const modalStoreList = document.querySelector("#modal-store-list");
+const btnAddMenu = document.querySelector("#btn-add-menu");
+const menuForm = document.querySelector("#menu-form");
 
 function sendMenuForm(url, method) {
     // const form = new FormData(storeForm);
@@ -81,20 +84,51 @@ function resetMenuData() {
     listMenu(storeList.selectedIndex);
 }
 
-
-
-fetch("/api/buser/store")
-.then((res) => res.json())
-.then((result) => {
-    result.data.forEach(element => {
-        console.log(element);
-        const option = document.createElement("option");
-        option.value = element.code;
-        option.innerText = element.name;
-        storeList.appendChild(option)
+function setSelectList(select) {
+    fetch("/api/buser/store")
+    .then((res) => res.json())
+    .then((result) => {
+        result.data.forEach(element => {
+            console.log(element);
+            const option = document.createElement("option");
+            option.value = element.code;
+            option.innerText = element.name;
+            select.appendChild(option)
+        })
     })
-})
+}
 
+function saveMenu() {
+    const form = new FormData(menuForm);
+    const urlEncodedForm = new URLSearchParams(form)
+    const storeCode = modalStoreList.options[modalStoreList.selectedIndex].value;
+    const url = `/api/buser/menu?store_id=${storeCode}`;
+    console.log(url);
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        },
+        body: urlEncodedForm,
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        console.log('Success:', data);
+        UIkit.modal(storeModal).hide();
+    })
+    .catch((error) => {
+        console.error('Error: ', error);
+    });
+}
+
+setSelectList(storeList);
+
+btnAddMenu.addEventListener("click", () => setSelectList(modalStoreList))
 storeList.addEventListener("change", resetMenuData);
+menuForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    saveMenu();
+})
 listMenu();
 console.log("listMenu done");

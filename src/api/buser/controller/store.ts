@@ -216,6 +216,8 @@ export async function updateStore(req: Request, res: Response) {
 //delete store
 export async function deleteStore(req: Request, res: Response) {
     const targetId = req.query.store_id
+    console.log("req body : ", req.body)
+    console.log(targetId, req.session.buser.id);
 
     if (targetId == undefined) {
         res.status(400).json({
@@ -237,7 +239,8 @@ export async function deleteStore(req: Request, res: Response) {
     if (targetStore == null) {
         res.status(404).json({
             code: 404,
-            message: "매장을 찾지 못했습니다."
+            message: "매장을 찾지 못했습니다.",
+            info: targetId + req.session.buser.id
         })
 
         return

@@ -9,6 +9,10 @@ const storeModalName = storeForm.querySelector("#store-modal-name");
 const storeModalCode = storeForm.querySelector("#store-modal-code");
 const storeModalDesc = storeForm.querySelector("#store-modal-description");
 const storeModalZip = storeForm.querySelector("#postcode");
+const storeModalAddress1 = storeForm.querySelector("#address")
+const storeModalAddress2 = storeForm.querySelector("#detailAddress")
+const storeModalAddress3 = storeForm.querySelector("#extraAddress")
+const storeModalElement = [storeModalName, storeModalCode, storeModalDesc, storeModalZip, storeModalAddress1, storeModalAddress2, storeModalAddress3];
 
 function sendStoreForm(url, method) {
     const form = new FormData(storeForm);
@@ -56,11 +60,11 @@ function listStore() {
                 btnDeleteStore.classList.remove("hidden");
                 storeForm.status = "PUT"; //edit 상태라는 표시 위한 class 추가하기
                 storeModalTitle.innerText = "매장 정보 수정";
+                storeModalName.value = element.name;
+                storeModalZip.value= element.zip_code;
+                storeModalDesc.value = element.description;
+                storeModalCode.value = element.code;
                 storeModalCode.setAttribute("readonly", "");
-                storeModalName.setAttribute("value", element.name);
-                storeModalCode.setAttribute("value", element.code);
-                storeModalDesc.innerText = element.description;
-                storeModalZip.setAttribute("value", element.zip_code);
                 console.log(element.code);
             });
 
@@ -96,10 +100,9 @@ function setAddModal() {
     storeForm.status = "POST";
     btnDeleteStore.classList.add("hidden");
     storeModalCode.removeAttribute("readonly");
-    storeModalName.setAttribute("value", "");
-    storeModalCode.setAttribute("value", "");
-    storeModalDesc.innerText = "";
-    storeModalZip.setAttribute("value", "");
+    storeModalElement.forEach((element) => {
+        element.value = "";
+    })
 }
 
 function submitForm(event) {

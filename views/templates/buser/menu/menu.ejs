@@ -10,14 +10,16 @@
     <div class="uk-width-1-1">
         <div class="uk-card uk-card-default uk-card-body" >
             <h2>상품 조회</h2>
-            <button class="uk-button uk-button-primary">상품 추가</button>
+            <button id="btn-add-menu" class="uk-button uk-button-primary" href="#menu-modal" uk-toggle>상품 추가</button>
         </div>
     </div>
     
     <div class="uk-width-1-1">
         <div class="uk-card uk-card-default uk-card-body">
             <h2>판매중인 상품 조회</h2>
-            <select id="store-list"></select>
+            <select id="store-list">
+                <option>매장 선택</option>
+            </select>
             <table class="uk-table uk-table-divider uk-table-responsive">
                 <thead>
                     <tr>
@@ -58,14 +60,13 @@
 <!-- This is the modal -->
 <div id="menu-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
-        <form>
+        <form id="menu-form">
             <div class="uk-child-width-1-2@s uk-grid-small" uk-grid>
                 <div>
                     <div class="uk-margin uk-width-medium@s">
                         <h5>매장 선택</h5>
-                        <select class="uk-select">
+                        <select id="modal-store-list"class="uk-select">
                             <option>매장 선택</option>
-                            <option>충북대 축제 매장(테스트)</option>
                         </select>
                     </div>
                 </div>
