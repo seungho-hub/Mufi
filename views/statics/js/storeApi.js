@@ -4,17 +4,15 @@ const storeModal = document.querySelector("#store-modal");
 const btnAddStore = document.querySelector("#btn-add-store");
 const btnDeleteStore = document.querySelector("#btn-delete-store");
 
-const storeModalTitle = storeForm.querySelector("#store-modal-name");
+const storeModalTitle = document.querySelector("#store-modal-title");
+const storeModalName = storeForm.querySelector("#store-modal-name");
 const storeModalCode = storeForm.querySelector("#store-modal-code");
 const storeModalDesc = storeForm.querySelector("#store-modal-description");
 const storeModalZip = storeForm.querySelector("#postcode");
 
-const varToStr = varObj => Object.keys(varObj)[0];
-
 function sendStoreForm(url, method) {
     const form = new FormData(storeForm);
     const urlEncodedForm = new URLSearchParams(form)
-    console.log(method);
 
     fetch(url, {
         method: method,
@@ -24,24 +22,23 @@ function sendStoreForm(url, method) {
         body: urlEncodedForm,
     })
     .then((res) => res.json())
-    .then((data) => {
-        console.log('Success:', data);
+    .then((result) => {
+        console.log('Success:', result);
         UIkit.modal(storeModal).hide();
         resetStoreData();
+        return result.data;
     })
     .catch((error) => {
         console.error('Error: ', error);
     });
-    
 }
 
 function listStore() {
-    const url = "/api/buser/store"
-    fetch(url)
+    fetch("/api/buser/store")
     .then((res) => res.json())
     .then((result) => {
         result.data.forEach(element => {
-            // console.log(element);
+            console.log(element);
             const tr = document.createElement("tr");
             const name = document.createElement("p");
             const code = document.createElement("p");
@@ -58,15 +55,16 @@ function listStore() {
                 console.log("수정 팝업 오픈");
                 btnDeleteStore.classList.remove("hidden");
                 storeForm.status = "PUT"; //edit 상태라는 표시 위한 class 추가하기
+                storeModalTitle.innerText = "매장 정보 수정";
                 storeModalCode.setAttribute("readonly", "");
-                storeModalTitle.setAttribute("value", element.name);
+                storeModalName.setAttribute("value", element.name);
                 storeModalCode.setAttribute("value", element.code);
                 storeModalDesc.innerText = element.description;
                 storeModalZip.setAttribute("value", element.zip_code);
                 console.log(element.code);
             });
 
-            const storeInfo = [name, code, description, updatedAt, btnEditStore];
+            const storeInfo = [name, description, updatedAt, btnEditStore];
             const updatedTime = new Date(Date.parse(element.updatedAt))
 
             
@@ -94,10 +92,11 @@ function resetStoreData() {
 
 function setAddModal() {
     console.log("등록 팝업 오픈");
+    storeModalTitle.innerText = "매장 신규 등록"
     storeForm.status = "POST";
     btnDeleteStore.classList.add("hidden");
     storeModalCode.removeAttribute("readonly");
-    storeModalTitle.setAttribute("value", "");
+    storeModalName.setAttribute("value", "");
     storeModalCode.setAttribute("value", "");
     storeModalDesc.innerText = "";
     storeModalZip.setAttribute("value", "");
@@ -110,6 +109,11 @@ function submitForm(event) {
 }
 
 btnAddStore.addEventListener("click", setAddModal);
+btnDeleteStore.addEventListener("click", (event) => {
+    storeForm.status = "DELETE";
+    console.log("정리"+storeModalCode.value);
+    submitForm(event);
+})
 storeForm.addEventListener("submit", submitForm);
 
 listStore();

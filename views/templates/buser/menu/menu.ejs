@@ -17,6 +17,7 @@
     <div class="uk-width-1-1">
         <div class="uk-card uk-card-default uk-card-body">
             <h2>판매중인 상품 조회</h2>
+            <select id="store-list"></select>
             <table class="uk-table uk-table-divider uk-table-responsive">
                 <thead>
                     <tr>
@@ -26,7 +27,7 @@
                         <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="table-data">
                     <tr>
                         <td>4컷 사진</td>
                         <td>3,000원</td>
@@ -49,13 +50,13 @@
             </table>
         </div>
     </div>
-
+</div>
 
     <!-- This is an anchor toggling the modal -->
 
 
 <!-- This is the modal -->
-<div id="modal-example" uk-modal>
+<div id="menu-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
         <form>
             <div class="uk-child-width-1-2@s uk-grid-small" uk-grid>
@@ -111,87 +112,5 @@
         
     </div>
 </div>
-    
-
-    <!-- <div id="booth-card" class="uk-width-1-4@m">
-        <ul class="uk-grid-small uk-child-width-1-1" uk-grid>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
-                    <div class="uk-flex uk-flex-between">
-                        <div>1번 부스</div>
-                        <div class="booth-info">
-                            <span class="uk-label uk-label-success">동작</span>
-                            <span uk-icon="cog"></span>
-                            <span uk-icon="trash"></span>
-                        </div>
-                        
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
-                    <div class="uk-flex uk-flex-between">
-                        <div>2번 부스</div>
-                        <div class="booth-info">
-                            <span class="uk-label uk-label-warning">중지</span>
-                            <span uk-icon="cog"></span>
-                            <span uk-icon="trash"></span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
-                    <div class="uk-flex uk-flex-between">
-                        <div>3번 부스</div>
-                        <div class="booth-info">
-                            <span class="uk-label uk-label-warning">중지</span>
-                            <span uk-icon="cog"></span>
-                            <span uk-icon="trash"></span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
-                    <div class="uk-flex uk-flex-between">
-                        <div>4번 부스</div>
-                        <div class="booth-info">
-                            <span class="uk-label uk-label-warning">중지</span>
-                            <span uk-icon="cog"></span>
-                            <span uk-icon="trash"></span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
-                    <div class="uk-flex uk-flex-between">
-                        <div>5번 부스</div>
-                        <div class="booth-info">
-                            <span class="uk-label uk-label-warning">중지</span>
-                            <span uk-icon="cog"></span>
-                            <span uk-icon="trash"></span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="uk-card uk-card-default uk-card-body uk-padding-small">
-                    <div class="uk-flex uk-flex-between">
-                        <div>6번 부스</div>
-                        <div class="booth-info">
-                            <span class="uk-label uk-label-warning">중지</span>
-                            <span uk-icon="cog"></span>
-                            <span uk-icon="trash"></span>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div> -->
-    <div>
-
-    </div>
-</div>
+<script src="/js/menuApi.js"></script>
     <%- include ('../index/footer') %>
