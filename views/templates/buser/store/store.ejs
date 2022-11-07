@@ -16,10 +16,10 @@
                 <thead>
                     <tr>
                         <th>상점 이름</th>
-                        <th>상점 코드</th>
-                        <th>상점 설명</th>
-                        <th>등록 시간</th>
-                        <th>상세 설정</th>
+                        <!-- <th>상점 코드</th> -->
+                        <th>메모</th>
+                        <th>등록 시각</th>
+                        <th>설정</th>
                     </tr>
                 </thead>
                 <tbody id="table-data"></tbody>
@@ -34,7 +34,7 @@
         <div id="content" class="uk-margin-large uk-width-xlarge@s">
             <div>
                 <div>
-                    <h2>매장 신규 등록</h2>
+                    <h2 id="store-modal-title">매장 신규 등록</h2>
                 </div>
                 <div class="uk-margin-large uk-width-xlarge@s form-div">
                     <form id="storeForm">
@@ -54,7 +54,7 @@
                             </div>
                             <div class="uk-width-xlarge@s">
                                 <div class="uk-margin">
-                                    <h5>매장 설명</h5>
+                                    <h5>메모</h5>
                                     <textarea id="store-modal-description" class="uk-textarea" type="text" rows="3" name="description" placeholder="매장의 위치, 특징에 대한 간단한 설명을 입력해주세요">fuck</textarea>
                                 </div>
                             </div>

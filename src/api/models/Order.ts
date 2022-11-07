@@ -2,6 +2,7 @@ import { sequelize } from "./index"
 import { DataTypes, NOW } from "sequelize";
 import Store from "./Store"
 import Menus from "./Menu"
+import Photo from "./Photo"
 
 const Order = sequelize.define("order", {
     id: {
@@ -44,6 +45,13 @@ const Order = sequelize.define("order", {
 }, {
     createdAt: false,
     updatedAt: false,
+})
+
+Order.hasOne(Photo, {
+    foreignKey: {
+        name: "order_id",
+        allowNull: false,
+    }
 })
 
 export default Order

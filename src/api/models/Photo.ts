@@ -1,11 +1,11 @@
 import { sequelize } from "./index"
-import { DataTypes } from "sequelize";
+import { DataTypes, NOW, DataType } from 'sequelize';
+import Store from "./BUser"
 
-import User from "./User"
-
-const Payment = sequelize.define("Payment", {
+const Photo = sequelize.define("Photo", {
     id: {
         type: DataTypes.UUID,
+        allowNull: false,
         primaryKey: true,
     },
     image: {
@@ -16,4 +16,4 @@ const Payment = sequelize.define("Payment", {
     updatedAt: false,
 })
 
-export default Payment
+export default Photo
