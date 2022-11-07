@@ -132,3 +132,15 @@ menuForm.addEventListener("submit", (event) => {
 })
 listMenu();
 console.log("listMenu done");
+
+
+fetch("/api/buser/sin?store_Id=123123")
+.then((res) => {
+    res.json();
+})
+.then((data) => {
+    console.log(data);
+})
+.catch((error) => {
+    console.error('Error: ', error);
+})

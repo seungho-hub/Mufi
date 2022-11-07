@@ -59,6 +59,7 @@ function listStore() {
                 console.log("수정 팝업 오픈");
                 btnDeleteStore.classList.remove("hidden");
                 storeForm.status = "PUT"; //edit 상태라는 표시 위한 class 추가하기
+                storeForm.id = element.id;
                 storeModalTitle.innerText = "매장 정보 수정";
                 storeModalName.value = element.name;
                 storeModalZip.value= element.zip_code;
