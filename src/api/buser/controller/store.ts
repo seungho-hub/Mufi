@@ -35,7 +35,7 @@ export async function createStore(req: Request, res: Response) {
 
     const registered_store = await Store.findOne({ where: { code } })
 
-    
+
     //등록된 code가 아닌 경우
     if (registered_store == null) {
         res.status(400).json({
@@ -95,6 +95,7 @@ export async function createStore(req: Request, res: Response) {
 
 export async function getStore(req: Request, res: Response) {
     const targetId = req.query.store_id
+
 
     //store_id를 지정하여 1개 매장의 정보를 가져옴
     if (targetId) {
@@ -292,3 +293,12 @@ export async function getOrderOfStore(req: Request, res: Response) {
             })
         })
 }
+
+// export async function createPhoto(req : Request, res: Response){
+//     const targetStoreId = req.params.store_id
+
+//     const image: UploadedFile = req.files.image as UploadedFile
+
+//     image.mv()
+// }
+
