@@ -29,7 +29,10 @@ const Store = sequelize.define("Store", {
         type: DataTypes.STRING(10),
         unique: false
     },
-    //상세 주소
+    address: {
+        type: DataTypes.STRING,
+        unique: false,
+    },
     detail_address: {
         type: DataTypes.STRING,
     },
