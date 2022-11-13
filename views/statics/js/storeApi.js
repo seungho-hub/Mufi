@@ -11,8 +11,8 @@ const storeModalDesc = storeForm.querySelector("#store-modal-description");
 const storeModalZip = storeForm.querySelector("#postcode");
 const storeModalAddress1 = storeForm.querySelector("#address")
 const storeModalAddress2 = storeForm.querySelector("#detailAddress")
-const storeModalAddress3 = storeForm.querySelector("#extraAddress")
-const storeModalElement = [storeModalName, storeModalCode, storeModalDesc, storeModalZip, storeModalAddress1, storeModalAddress2, storeModalAddress3];
+// const storeModalAddress3 = storeForm.querySelector("#extraAddress")
+const storeModalElement = [storeModalName, storeModalCode, storeModalDesc, storeModalZip, storeModalAddress1, storeModalAddress2];
 
 function sendStoreForm(url, method) {
     const form = new FormData(storeForm);
@@ -65,6 +65,7 @@ function listStore() {
                 storeModalZip.value= element.zip_code;
                 storeModalDesc.value = element.description;
                 storeModalCode.value = element.code;
+                storeModalAddress1.value = element.address;
                 storeModalAddress2.value = element.detail_address;
                 storeModalCode.setAttribute("readonly", "");
                 console.log(element.code);

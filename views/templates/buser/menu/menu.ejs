@@ -20,23 +20,23 @@
             <select class="uk-select" id="store-list">
                 <option>매장 선택</option>
             </select>
-            <table class="uk-table uk-table-divider uk-table-responsive">
-                <thead>
-                    <tr>
-                        <th>상품명</th>
-                        <th>상품 가격</th>
-                        <th>상품 설명</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody id="table-data"></tbody>
-            </table>
+            <div id="menu-data">
+            </div>
         </div>
     </div>
 </div>
 
     <!-- This is an anchor toggling the modal -->
-
+<div id="modal-alert" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
+        <h2 class="uk-modal-title">메뉴 삭제</h2>
+        <p>해당 메뉴를 정말 삭제하시겠습니까?</p>
+        <p class="uk-text-right">
+            <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
+            <button id="btn-delete-menu" class="uk-button uk-button-primary" type="button">삭제</button>
+        </p>
+    </div>
+</div>
 
 <!-- This is the modal -->
 <div id="menu-modal" uk-modal>
@@ -73,7 +73,7 @@
                                 <h5>상품 사진 업로드</h5>
                                 <div class="uk-width-medium@s" uk-form-custom="target: true">
                                     <input type="file" id="menu-modal-image" name="image">
-                                    <input class="uk-input" type="text" placeholder="이미지 선택" disabled value="경로">
+                                    <input class="uk-input" id="menu-modal-image-name" type="text" placeholder="이미지 선택" disabled value="경로">
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,6 @@
                     </div>
                     <div class="uk-flex uk-flex-between uk-margin-small">
                         <span>
-                            <button id="btn-delete-menu" class="uk-button uk-button-danger">삭제</button>
                         </span>
                         <span>
                             <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>

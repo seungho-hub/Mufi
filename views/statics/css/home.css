@@ -25,6 +25,10 @@ section {
     background-color: aliceblue;
 }
 
+section > div#content {
+    max-width: 1080px;
+}
+
 #content {
     margin: 0 auto;
     /* background-color: aqua; */
