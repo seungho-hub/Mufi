@@ -32,7 +32,6 @@
 <div id="store-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
         <div id="content" class="uk-margin-large uk-width-xlarge@s">
-            <div>
                 <div>
                     <h2 id="store-modal-title">매장 신규 등록</h2>
                 </div>
@@ -67,7 +66,7 @@
                                         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
                                     </div>
                                     <input class="uk-input uk-width-expand" type="text" id="address" placeholder="주소" readonly><br>
-                                    <input class="uk-input uk-width-expand" type="text" name="detail_address" id="detailAddress" placeholder="상세주소">
+                                    <input class="uk-input uk-width-expand" type="text" id="detailAddress" name="detail_address" placeholder="상세주소">
                                     <input class="uk-input uk-width-expand" type="text" id="extraAddress" placeholder="참고항목">
                                 </div>
                             </div>
@@ -77,12 +76,12 @@
                                 <button id="btn-delete-store" class="uk-button uk-button-danger" type="submit">삭제</button>
                             </span>
                             <span>
-                                <button class="uk-button uk-button-primary" type="submit">등록</button>
+                                <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
+                                <button class="uk-button uk-button-primary" type="submit">저장</button>
                             </span>
                         </div>
                     </form>
                 </div>
-            </div>
         </div>
     </div>
 </div>

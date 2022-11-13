@@ -65,6 +65,7 @@ function listStore() {
                 storeModalZip.value= element.zip_code;
                 storeModalDesc.value = element.description;
                 storeModalCode.value = element.code;
+                storeModalAddress2.value = element.detail_address;
                 storeModalCode.setAttribute("readonly", "");
                 console.log(element.code);
             });
@@ -108,14 +109,14 @@ function setAddModal() {
 
 function submitForm(event) {
     event.preventDefault();
-    const url = (storeForm.status === "POST") ? "/api/buser/store" : `/api/buser/store?store_id=${storeModalCode.value}`;
+    const url = (storeForm.status === "POST") ? "/api/buser/store" : `/api/buser/store?store_id=${storeForm.id}`;
     sendStoreForm(url, storeForm.status) //url, method(post), 
 }
 
 btnAddStore.addEventListener("click", setAddModal);
 btnDeleteStore.addEventListener("click", (event) => {
     storeForm.status = "DELETE";
-    console.log("정리"+storeModalCode.value);
+    console.log("정리" + storeModalCode.value);
     submitForm(event);
 })
 storeForm.addEventListener("submit", submitForm);
