@@ -1,24 +1,41 @@
 const storeList = document.querySelector("#store-list");
-const tableData = document.querySelector("#table-data");
+const menuData = document.querySelector("#menu-data");
 const modalStoreList = document.querySelector("#modal-store-list");
 const btnAddMenu = document.querySelector("#btn-add-menu");
+const btnDeleteMenu = document.querySelector("#btn-delete-menu");
 const menuForm = document.querySelector("#menu-form");
 
-function sendMenuForm(url, method) {
-    // const form = new FormData(storeForm);
-    // const urlEncodedForm = new URLSearchParams(form)
+const alertModal = document.querySelector("#modal-alert");
 
+const menuModal = document.querySelector("#menu-modal");
+const menuModalTitle = document.querySelector("#menu-modal-title");
+const menuModalName = menuForm.querySelector("#menu-modal-name");
+const menuModalPrice = menuForm.querySelector("#menu-modal-price");
+const menuModalImg = menuForm.querySelector("#menu-modal-image");
+const menuModalDesc = menuForm.querySelector("#menu-modal-description");
+const menuModalImgName = menuForm.querySelector("#menu-modal-image-name");
+const menuModalElement = [menuModalName, menuModalPrice, menuModalImg, menuModalImgName, menuModalDesc];
+
+// function getAPI(url, method, form) {
+    
+//     fetch(url, )
+// }
+
+function sendMenuForm(url, method, form) {
+    const form = new FormData(menuForm);
+    // const urlEncodedForm = new URLSearchParams(form)
+    console.log(form)
     fetch(url, {
         method: method,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
-        // body: urlEncodedForm,
+        // headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        // },
+        body: form,
     })
     .then((res) => res.json())
     .then((data) => {
         console.log('Success:', data);
-        UIkit.modal(storeModal).hide();
+        UIkit.modal(menuModal).hide();
         resetMenuData();
     })
     .catch((error) => {
@@ -34,113 +51,132 @@ function listMenu() {
         // console.log(selected)
         console.log(result.data);
         result.data.forEach(element => {
-            const tr = document.createElement("tr");
-            const name = document.createElement("p");
-            const code = document.createElement("p");
-            const description = document.createElement("p");
-            const updatedAt = document.createElement("p");
+            const div = document.createElement("div");
+            div.innerHTML = 
+            `<div class="uk-padding-small">
+                <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                    <div>
+                        <img src="" alt="">
+                    </div>
+                    <div class="uk-width-expand">
+                        <h4 class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">Author</a></h4>
+                        <ul class="uk-comment-meta uk-subnav uk-subnav-divider uk-margin-remove-top">
+                            <li id="menu-price">12 days ago</li>
+                            <li id="menu-date">Reply</li>
+                        </ul>
+                    </div>
+                    <div class="uk-width-auto">
+                        <p id="menu-description">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div class="uk-width-auto" id="div-delete">
+                    </div>
+                </div>
+            </div>`;
+
+            const img = div.querySelector("img");
+            const name = div.querySelector("h4");
+            const ul = div.querySelector("ul");
+            const price = div.querySelector("li#menu-price")
+            const description = div.querySelector("p#menu-description");
+            const updatedAt = div.querySelector("li#menu-date");
             const btnEditMenu = document.createElement("a");
-
-            btnEditMenu.classList.add("btn-edit-store");
-            btnEditMenu.setAttribute("id", element.code);
-            btnEditMenu.setAttribute("href", "#store-modal")
-            btnEditMenu.setAttribute("uk-toggle", "");
-            btnEditMenu.innerHTML = '<span uk-icon="cog"></span>';
-            btnEditMenu.addEventListener("click", () => {
-                console.log("수정 팝업 오픈");
-                btnDeleteStore.classList.remove("hidden");
-                storeForm.status = "PUT"; //edit 상태라는 표시 위한 class 추가하기
-                storeModalTitle.innerText = "매장 정보 수정";
-                storeModalCode.setAttribute("readonly", "");
-                storeModalName.setAttribute("value", element.name);
-                storeModalCode.setAttribute("value", element.code);
-                storeModalDesc.innerText = element.description;
-                storeModalZip.setAttribute("value", element.zip_code);
-                console.log(element.code);
-            });
-
-            const menuInfo = [name, description, updatedAt, btnEditMenu];
+            const divDelete = div.querySelector("#div-delete");
             const updatedTime = new Date(Date.parse(element.updatedAt))
 
+            ul.classList.add("uk-comment-meta", "uk-subnav", "uk-subnav-divider", "uk-margin-remove-top");
+            divDelete.appendChild(btnEditMenu)
             
-            name.innerText = element.name;
-            code.innerText = element.code;
+            btnEditMenu.classList.add("btn-edit-menu");
+            btnEditMenu.setAttribute("id", element.id);
+            btnEditMenu.setAttribute("href", "#modal-alert")
+            btnEditMenu.setAttribute("uk-toggle", "");
+            btnEditMenu.innerHTML = '<span uk-icon="trash"></span>';
+            btnEditMenu.addEventListener("click", () => {
+                alertModal.id = element.id;
+            });
+
+            name.style.whiteSpace = "nowrap"
+            name.classList.add("uk-comment-title", "uk-margin-remove");
+
+            img.src = element.image;
+            img.style.objectFit = "cover";
+            img.style.width = "96px";
+            img.style.height = "96px";
+            img.style.borderRadius = "20%";
+
+            name.innerText = element.label;
+            price.innerText = element.price.toLocaleString('ko-KR') + "원";
             description.innerText = element.description;
             updatedAt.innerText = `${updatedTime.getFullYear()}/${updatedTime.getMonth()+1}/${updatedTime.getDay()} ${updatedTime.getHours()}:${updatedTime.getMinutes()}`;
-            menuInfo.forEach(info => {
-                const td = document.createElement("td");
-                td.appendChild(info);
-                tr.appendChild(td);
-            });
-            tableData.appendChild(tr);
+            menuData.appendChild(div);
+            console.log('등록');
         })
     })
 }
 
 function resetMenuData() {
-    // console.log("done");
-    while(tableData.firstChild) tableData.removeChild(tableData.firstChild);
-    // console.log(storeList.selectedIndex)
-    listMenu(storeList.selectedIndex);
+    while(menuData.firstChild) menuData.removeChild(menuData.firstChild);
+    menuForm.storeIndex = storeList.selectedIndex;
+    listMenu();
 }
 
-function setSelectList(select) {
+function setSelectList(select) { //option 정리 후, 매장 정보 불러와서 추가하는 역할
+    while(select.firstChild) select.removeChild(select.firstChild);
+    const voidValue = document.createElement("option");
+    voidValue.innerText = "매장 선택";
+    select.appendChild(voidValue);
     fetch("/api/buser/store")
     .then((res) => res.json())
     .then((result) => {
+        console.log(result);
         result.data.forEach(element => {
             console.log(element);
             const option = document.createElement("option");
-            option.value = element.code;
+            option.value = element.id;
             option.innerText = element.name;
-            select.appendChild(option)
+            select.appendChild(option);
         })
     })
 }
 
-function saveMenu() {
-    const form = new FormData(menuForm);
-    const urlEncodedForm = new URLSearchParams(form)
-    const storeCode = modalStoreList.options[modalStoreList.selectedIndex].value;
-    const url = `/api/buser/menu?store_id=${storeCode}`;
-    console.log(url);
+function setAddModal () {
+    menuModalTitle.innerText = "메뉴 신규 등록";
+    setSelectList(modalStoreList); // 매장명 셋팅
+    menuModalElement.forEach((element) => element.value = ""); //다 비우기
+    modalStoreList.removeAttribute("disabled");
+    menuForm.status = "POST";
+}
 
-    fetch(url, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-        },
-        body: urlEncodedForm,
-    })
+function submitForm(event) {
+    event.preventDefault();
+    const storeId = modalStoreList.options[modalStoreList.selectedIndex].value;
+    const url = (menuForm.status === "DELETE") ? `/api/buser/menu?menu_id=${menuForm.id}` : `/api/buser/menu?store_id=${storeId}`;
+    sendMenuForm(url, menuForm.status) //url, method(post), 
+    UIkit.modal(menuModal).hide();
+}
+
+
+btnDeleteMenu.addEventListener("click", (event) => {
+    const url = `/api/buser/menu?menu_id=${alertModal.id}`
+    const status = "DELETE"
+    fetch(url, {method: status})
     .then((res) => res.json())
-    .then((data) => {
-        console.log('Success:', data);
-        UIkit.modal(storeModal).hide();
+    .then((result) => {
+        console.log('Success: ', result);
+        UIkit.modal(alertModal).hide();
+        resetMenuData();
     })
     .catch((error) => {
         console.error('Error: ', error);
-    });
-}
+    })
+});
+
+btnAddMenu.addEventListener("click", setAddModal);
+storeList.addEventListener("change", resetMenuData);
+menuForm.addEventListener("submit", submitForm);
+
 
 setSelectList(storeList);
+setSelectList(modalStoreList);
 
-btnAddMenu.addEventListener("click", () => setSelectList(modalStoreList))
-storeList.addEventListener("change", resetMenuData);
-menuForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    saveMenu();
-})
-listMenu();
 console.log("listMenu done");
-
-
-fetch("/api/buser/sin?store_Id=123123")
-.then((res) => {
-    res.json();
-})
-.then((data) => {
-    console.log(data);
-})
-.catch((error) => {
-    console.error('Error: ', error);
-})

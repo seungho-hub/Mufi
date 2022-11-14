@@ -11,8 +11,8 @@ const storeModalDesc = storeForm.querySelector("#store-modal-description");
 const storeModalZip = storeForm.querySelector("#postcode");
 const storeModalAddress1 = storeForm.querySelector("#address")
 const storeModalAddress2 = storeForm.querySelector("#detailAddress")
-const storeModalAddress3 = storeForm.querySelector("#extraAddress")
-const storeModalElement = [storeModalName, storeModalCode, storeModalDesc, storeModalZip, storeModalAddress1, storeModalAddress2, storeModalAddress3];
+// const storeModalAddress3 = storeForm.querySelector("#extraAddress")
+const storeModalElement = [storeModalName, storeModalCode, storeModalDesc, storeModalZip, storeModalAddress1, storeModalAddress2];
 
 function sendStoreForm(url, method) {
     const form = new FormData(storeForm);
@@ -65,6 +65,8 @@ function listStore() {
                 storeModalZip.value= element.zip_code;
                 storeModalDesc.value = element.description;
                 storeModalCode.value = element.code;
+                storeModalAddress1.value = element.address;
+                storeModalAddress2.value = element.detail_address;
                 storeModalCode.setAttribute("readonly", "");
                 console.log(element.code);
             });
@@ -108,14 +110,14 @@ function setAddModal() {
 
 function submitForm(event) {
     event.preventDefault();
-    const url = (storeForm.status === "POST") ? "/api/buser/store" : `/api/buser/store?store_id=${storeModalCode.value}`;
+    const url = (storeForm.status === "POST") ? "/api/buser/store" : `/api/buser/store?store_id=${storeForm.id}`;
     sendStoreForm(url, storeForm.status) //url, method(post), 
 }
 
 btnAddStore.addEventListener("click", setAddModal);
 btnDeleteStore.addEventListener("click", (event) => {
     storeForm.status = "DELETE";
-    console.log("정리"+storeModalCode.value);
+    console.log("정리" + storeModalCode.value);
     submitForm(event);
 })
 storeForm.addEventListener("submit", submitForm);
