@@ -35,7 +35,7 @@ function getAPI(url, method, form) {
 //메뉴 추가하기 POST
 //메뉴 삭제하기 DELETE
 
-function sendMenuForm(url, method, form) {
+function sendMenuForm(url, method) {
     const form = new FormData(menuForm);
     // const urlEncodedForm = new URLSearchParams(form)
     console.log(form)
