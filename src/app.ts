@@ -57,7 +57,6 @@ app.use("/user/", userAuthenticated)
 //for api
 app.use("/api/user", userAuthenticated)
 
-app.use
 app.use("/auth/user", authUser)
 app.use("/user", userHomeRouter)
 app.use("/api/user/uin", uinRouter)
@@ -86,7 +85,6 @@ app.use("/api/kiosk/order", orderRouter)
 app.use("/kiosk", checkGotStoreAuthorization)
 app.use("/kiosk", checkGotUserAuthorization)
 app.use("/kiosk", kioskRouter)
-
 
 app.use("/auth/kiosk", kioskAuthRouter)
 

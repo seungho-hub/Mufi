@@ -61,11 +61,10 @@ export async function createStore(req: Request, res: Response) {
         {
             where: { code },
         })
-        .then((updated_store) => {
+        .then((affectedCount) => {
             res.status(200).json({
                 code: 200,
                 message: "성공적으로 매장이 등록되었습니다.",
-                updated_store
             })
 
             return
