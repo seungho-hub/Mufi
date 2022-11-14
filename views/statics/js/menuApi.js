@@ -16,10 +16,24 @@ const menuModalDesc = menuForm.querySelector("#menu-modal-description");
 const menuModalImgName = menuForm.querySelector("#menu-modal-image-name");
 const menuModalElement = [menuModalName, menuModalPrice, menuModalImg, menuModalImgName, menuModalDesc];
 
-// function getAPI(url, method, form) {
-    
-//     fetch(url, )
-// }
+function getAPI(url, method, form) {
+    const head = {method : method};
+    if(form !== undefined && (head === "POST" || head ==="PUT")) {
+        const newForm = new FormData(form);
+        head.body = newForm;
+        fetch(url, head)
+        .then(res => res.json())
+        .then(result => {return result})
+        .catch(error => {return error})
+    }
+    else console.log("API 불러오기 실패");
+}
+
+//매장 불러오기 GET
+
+//메뉴 불러오기 GET
+//메뉴 추가하기 POST
+//메뉴 삭제하기 DELETE
 
 function sendMenuForm(url, method, form) {
     const form = new FormData(menuForm);
@@ -125,6 +139,7 @@ function setSelectList(select) { //option 정리 후, 매장 정보 불러와서
     const voidValue = document.createElement("option");
     voidValue.innerText = "매장 선택";
     select.appendChild(voidValue);
+    getAPI("/api/buser/store", "GET")
     fetch("/api/buser/store")
     .then((res) => res.json())
     .then((result) => {
