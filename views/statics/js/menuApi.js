@@ -16,9 +16,12 @@ const menuModalDesc = menuForm.querySelector("#menu-modal-description");
 const menuModalImgName = menuForm.querySelector("#menu-modal-image-name");
 const menuModalElement = [menuModalName, menuModalPrice, menuModalImg, menuModalImgName, menuModalDesc];
 
+// function getAPI(url, method, form) {
+    
+//     fetch(url, )
+// }
 
-
-function sendMenuForm(url, method) {
+function sendMenuForm(url, method, form) {
     const form = new FormData(menuForm);
     // const urlEncodedForm = new URLSearchParams(form)
     console.log(form)
@@ -78,14 +81,11 @@ function listMenu() {
             const updatedAt = div.querySelector("li#menu-date");
             const btnEditMenu = document.createElement("a");
             const divDelete = div.querySelector("#div-delete");
-
-            name.style.whiteSpace = "nowrap"
+            const updatedTime = new Date(Date.parse(element.updatedAt))
 
             ul.classList.add("uk-comment-meta", "uk-subnav", "uk-subnav-divider", "uk-margin-remove-top");
-            
-            ul.appendChild(price);
             divDelete.appendChild(btnEditMenu)
-
+            
             btnEditMenu.classList.add("btn-edit-menu");
             btnEditMenu.setAttribute("id", element.id);
             btnEditMenu.setAttribute("href", "#modal-alert")
@@ -95,30 +95,19 @@ function listMenu() {
                 alertModal.id = element.id;
             });
 
+            name.style.whiteSpace = "nowrap"
             name.classList.add("uk-comment-title", "uk-margin-remove");
-
-
-            const menuInfo = [div, img, name, ul, updatedAt, description, btnEditMenu];
-            const updatedTime = new Date(Date.parse(element.updatedAt))
 
             img.src = element.image;
             img.style.objectFit = "cover";
             img.style.width = "96px";
             img.style.height = "96px";
-            img.classList.add("uk-comment-avatar");
             img.style.borderRadius = "20%";
 
             name.innerText = element.label;
             price.innerText = element.price.toLocaleString('ko-KR') + "원";
             description.innerText = element.description;
             updatedAt.innerText = `${updatedTime.getFullYear()}/${updatedTime.getMonth()+1}/${updatedTime.getDay()} ${updatedTime.getHours()}:${updatedTime.getMinutes()}`;
-            // menuInfo.forEach(info => {
-            //     const td = document.createElement("div");
-            //     td.classList.add("uk-comment");
-            //     td.appendChild(info);
-            //     tr.appendChild(td);
-            // });
-            // tableData.appendChild(tr);
             menuData.appendChild(div);
             console.log('등록');
         })
@@ -166,10 +155,6 @@ function submitForm(event) {
     UIkit.modal(menuModal).hide();
 }
 
-setSelectList(storeList);
-setSelectList(modalStoreList);
-
-
 
 btnDeleteMenu.addEventListener("click", (event) => {
     const url = `/api/buser/menu?menu_id=${alertModal.id}`
@@ -186,11 +171,12 @@ btnDeleteMenu.addEventListener("click", (event) => {
     })
 });
 
-
-
 btnAddMenu.addEventListener("click", setAddModal);
 storeList.addEventListener("change", resetMenuData);
 menuForm.addEventListener("submit", submitForm);
 
+
+setSelectList(storeList);
+setSelectList(modalStoreList);
 
 console.log("listMenu done");
