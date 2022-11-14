@@ -6,7 +6,7 @@ import path from "path"
 import mime from "mime-types"
 import { v4 } from "uuid"
 import Store from "../../models/Store"
-import { ValidationError, QueryError } from 'sequelize';
+import { ValidationError, QueryError, Op } from 'sequelize';
 
 //create store with body from
 //except case
@@ -97,6 +97,9 @@ export async function getStore(req: Request, res: Response) {
         const store = await Store.findOne({
             where: {
                 id: targetId,
+                updatedAt: {
+                    [Op.ne]: null,
+                }
             }
         })
 
@@ -121,7 +124,10 @@ export async function getStore(req: Request, res: Response) {
     else {
         const stores = await Store.findAll({
             where: {
-                buser_id: req.session.buser.id
+                buser_id: req.session.buser.id,
+                updatedAt: {
+                    [Op.ne]: null,
+                }
             }
         })
 
