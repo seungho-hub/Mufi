@@ -7,7 +7,6 @@ import md5 from "md5"
 
 export const storeAuthorization = async (req: Request, res: Response) => {
     const inputedSin = req.body.sin
-    console.log(inputedSin)
 
     //sin value is empty
     if (inputedSin == undefined) {
@@ -32,6 +31,8 @@ export const storeAuthorization = async (req: Request, res: Response) => {
                     code: 400,
                     message: "유효하지 않은 sin입니다."
                 })
+
+                return
             }
             if (req.session.kiosk == undefined) {
                 req.session.kiosk = {
@@ -45,7 +46,6 @@ export const storeAuthorization = async (req: Request, res: Response) => {
             res.redirect("/auth/kiosk/user")
         })
         .catch((err) => {
-            throw err
             if (err) {
                 res.status(500).json({
                     code: 500,
@@ -60,7 +60,6 @@ export const renderStoreAuthorization = async (req: Request, res: Response) => {
 }
 
 export const renderUserAuthorization = async (req: Request, res: Response) => {
-    console.log(req.session)
     if (req.session && req.session.kiosk && req.session.kiosk.store_id) {
         QRCode.toDataURL(`${process.env.PROTOCOL}://${process.env.HOST}:${process.env.PORT}/auth/kiosk/user/qr`)
             .then((qrDataURL) => {
