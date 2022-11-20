@@ -18,8 +18,7 @@ Mufi kiosk를 위한 software입니다.
 
 ### run server
 
-    yarn run dev //development mode로 server를 실행합니다.
-    yarn run
+    yarn run dev
 
 ## 2.
 
@@ -29,4 +28,4 @@ Mufi kiosk를 위한 software입니다.
 
 # Author
 
-- [seunghohub](https://github.com/seungho-hub)
+- [seungho-hub](https://github.com/seungho-hub)
