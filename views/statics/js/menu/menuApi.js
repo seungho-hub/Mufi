@@ -1,7 +1,7 @@
 import fetchData from '../fetchAPI.js';
 import {divMenu} from './menuIndex.js';
 
-const storeList = document.querySelector("#store-list");
+// const storeList = document.querySelector("#store-list");
 const menuData = document.querySelector("#menu-data");
 const modalStoreList = document.querySelector("#modal-store-list");
 const btnAddMenu = document.querySelector("#btn-add-menu");
@@ -24,13 +24,10 @@ const menuModalElement = [menuModalName, menuModalPrice, menuModalImg, menuModal
 //메뉴 추가하기 POST
 //메뉴 삭제하기 DELETE
 
-function getMenuList() {
+export function getMenuList(code) {
     while(menuData.firstChild) menuData.removeChild(menuData.firstChild);
 
-    const selected = storeList.options[storeList.selectedIndex].value;
-    if (selected === "매장 선택") return;
-
-    const url = `/api/buser/menu?store_id=${selected}`;
+    const url = `/api/buser/menu?store_id=${code}`;
     
     console.log("getMenuList url - ", url);
     fetchData(url, "GET")
@@ -74,7 +71,7 @@ function getMenuList() {
             name.innerText = element.label;
             price.innerText = element.price.toLocaleString('ko-KR') + "원";
             description.innerText = element.description;
-            updatedAt.innerText = `${updatedTime.getFullYear()}/${updatedTime.getMonth()+1}/${updatedTime.getDay()} ${updatedTime.getHours()}:${updatedTime.getMinutes()}`;
+            updatedAt.innerText = `${updatedTime.getFullYear()}/${updatedTime.getMonth()+1}/${updatedTime.getDate()} ${updatedTime.getHours()}:${updatedTime.getMinutes() < 10 ? "0" + updatedTime.getMinutes() : updatedTime.getMinutes()}`;
             menuData.appendChild(div);
         })
     })
@@ -99,7 +96,7 @@ function setStoreList(select) {
     .catch(error => console.log("Error: " + error));
 }
 
-function setModal () {
+export function setModal () {
     menuModalTitle.innerText = "메뉴 신규 등록";
     setStoreList(modalStoreList); // 매장명 셋팅
     menuModalElement.forEach((element) => element.value = ""); //다 비우기
@@ -131,21 +128,10 @@ function deleteMenu(event) {
 }
 
 btnDeleteMenu.addEventListener("click", deleteMenu);
-btnAddMenu.addEventListener("click", setModal);
-storeList.addEventListener("change", getMenuList);
+// btnAddMenu.addEventListener("click", setModal);
+// storeList.addEventListener("change", getMenuList);
 menuForm.addEventListener("submit", addMenu);
 
-setStoreList(storeList);
+// setStoreList(storeList);
 
 console.log("getMenuList done");
-
-
-
-// 매장+메뉴 페이지 통합하기
-
-// 매장리스트 - 선택, 설정
-
-// 매장 선택시
-// 해당매장 메뉴 출력 (+메뉴 추가 버튼)
-
-//합쳐버리기
