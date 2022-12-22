@@ -1,5 +1,6 @@
 {
     "testUser": {
+        "id": "",
         "username": "test_username",
         "email": "test_email@gmail.com",
         "password": "test_password"
@@ -7,9 +8,11 @@
     "testStore": {
         "id": "test_id",
         "code": "test_code",
+
         "name": "test_name",
         "description": "test_description",
         "zip_code": "test",
+        "address": "test_address",
         "detail_address": "test_detail_address"
     },
     "updateStore": {
@@ -21,6 +24,7 @@
         "detail_address": "test_updated_detail_address"
     },
     "testMenu": {
+        "id": "",
         "label": "test_label",
         "price": 20000,
         "description": "test_description",
