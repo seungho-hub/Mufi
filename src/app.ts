@@ -6,6 +6,7 @@ import { authUser } from "./api/auth/user/route"
 
 //buser router
 import { menuRouter } from "./api/buser/routes/menu"
+import { buserRouter } from "./api/buser/routes/buser"
 import { authBUser } from "./api/auth/buser/route"
 import { bUserRouter } from "./buser/router"
 import { storeRouter } from "./api/buser/routes/store"
@@ -73,6 +74,7 @@ app.use("/api/buser", bUserAuthenticated)
 app.use("/auth/buser", authBUser)
 app.use("/buser", bUserRouter)
 
+app.use("/api/buser/", buserRouter)
 app.use("/api/buser/menu", menuRouter)
 app.use("/api/buser/store", storeRouter)
 app.use("/api/buser/sin", sinRouter)
