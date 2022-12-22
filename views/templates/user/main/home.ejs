@@ -27,8 +27,8 @@
         tossPayments.requestBillingAuth('카드', { // 결제 수단 파라미터
             // 빌링키 발급 요청을 위한 파라미터
             customerKey: "<%= user.id %>",
-            successUrl: 'http://172.30.1.59/user/payments/toss/billing_auth/success',
-            failUrl: 'http://172.30.1.59/user/payments/toss/billing_auth/fail',
+            successUrl: 'http://localhost/user/payments/toss/billing_auth/success',
+            failUrl: 'http://localhost/user/payments/toss/billing_auth/fail',
         })
     })
 </script>
