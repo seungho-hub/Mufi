@@ -10,7 +10,7 @@ article {
 }
 
 .hidden {
-    visibility: hidden;
+    display: none;
 }
 
 header > nav {

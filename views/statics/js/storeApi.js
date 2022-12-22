@@ -1,3 +1,5 @@
+import { getMenuList, setModal} from "./menu/menuApi.js";
+
 const storeForm = document.querySelector("#storeForm")
 const tableData = document.querySelector("#table-data");
 const storeModal = document.querySelector("#store-modal");
@@ -12,7 +14,11 @@ const storeModalZip = storeForm.querySelector("#postcode");
 const storeModalAddress1 = storeForm.querySelector("#address")
 const storeModalAddress2 = storeForm.querySelector("#detailAddress")
 // const storeModalAddress3 = storeForm.querySelector("#extraAddress")
+const storeModalUpdatedAt = document.querySelector("#store-modal-updatedAt");
 const storeModalElement = [storeModalName, storeModalCode, storeModalDesc, storeModalZip, storeModalAddress1, storeModalAddress2];
+
+const divMenu = document.querySelector("#div-menu");
+const BtnDivMenuClose = document.querySelector("#btn-div-menu-close");
 
 function sendStoreForm(url, method) {
     const form = new FormData(storeForm);
@@ -49,9 +55,12 @@ function listStore() {
             const description = document.createElement("p");
             const updatedAt = document.createElement("p");
             const btnEditStore = document.createElement("a");
+            const btnGetMenu = document.createElement("button");
+            const btnAddMenu = document.createElement("button");
+
+            const updatedTime = new Date(Date.parse(element.updatedAt))
 
             btnEditStore.classList.add("btn-edit-store");
-            btnEditStore.setAttribute("id", element.code);
             btnEditStore.setAttribute("href", "#store-modal")
             btnEditStore.setAttribute("uk-toggle", "");
             btnEditStore.innerHTML = '<span uk-icon="cog"></span>';
@@ -68,17 +77,34 @@ function listStore() {
                 storeModalAddress1.value = element.address;
                 storeModalAddress2.value = element.detail_address;
                 storeModalCode.setAttribute("readonly", "");
+                storeModalUpdatedAt.innerText = `최근 수정 시각 : ${updatedTime.getFullYear()}/${updatedTime.getMonth()+1}/${updatedTime.getDate()} ${updatedTime.getHours()}:${updatedTime.getMinutes() < 10 ? "0" + updatedTime.getMinutes() : updatedTime.getMinutes()}`
+                
                 console.log(element.code);
             });
 
-            const storeInfo = [name, description, updatedAt, btnEditStore];
-            const updatedTime = new Date(Date.parse(element.updatedAt))
+            const storeInfo = [name, btnAddMenu, btnGetMenu, btnEditStore];
+            
+            btnGetMenu.addEventListener("click", () => {
+                // const parent = divMenu.parentNode;
+                // const nav = parent.firstChild;
+                // parent.insertBefore(divMenu, parent.firstChild);
+                // parent.insertBefore(nav, parent.firstChild);
+                getMenuList(element.id);
+                divMenu.classList.remove("hidden");
+            })
+
+            btnAddMenu.classList.add("btn-add-menu","uk-button", "uk-button-default", "uk-button-small")
+            btnAddMenu.innerText = "메뉴 추가"
+            btnAddMenu.setAttribute("href", "#menu-modal");
+            btnAddMenu.setAttribute("uk-toggle","");
+            btnAddMenu.addEventListener("click", setModal)
 
             
             name.innerText = element.name;
             code.innerText = element.code;
             description.innerText = element.description;
-            updatedAt.innerText = `${updatedTime.getFullYear()}/${updatedTime.getMonth()+1}/${updatedTime.getDay()} ${updatedTime.getHours()}:${updatedTime.getMinutes()}`;
+            btnGetMenu.classList.add("btn-get-menu","uk-button", "uk-button-default", "uk-button-small")
+            btnGetMenu.innerText = "메뉴 보기"
             storeInfo.forEach(info => {
                 const td = document.createElement("td");
                 td.appendChild(info);
@@ -106,6 +132,7 @@ function setAddModal() {
     storeModalElement.forEach((element) => {
         element.value = "";
     })
+    storeModalUpdatedAt.innerText = "";
 }
 
 function submitForm(event) {
@@ -113,6 +140,10 @@ function submitForm(event) {
     const url = (storeForm.status === "POST") ? "/api/buser/store" : `/api/buser/store?store_id=${storeForm.id}`;
     sendStoreForm(url, storeForm.status) //url, method(post), 
 }
+
+BtnDivMenuClose.addEventListener("click", () => {
+    divMenu.classList.add("hidden");
+})
 
 btnAddStore.addEventListener("click", setAddModal);
 btnDeleteStore.addEventListener("click", (event) => {
