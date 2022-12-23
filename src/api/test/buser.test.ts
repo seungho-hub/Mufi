@@ -258,6 +258,21 @@ if (server.listening) {
         step("12. [buser] update menu", (done) => {
             done()
         })
+
+        step("13. [buser] generate store identifier number", (done) => {
+            agent
+                .get("/api/buser/sin")
+                .query({
+                    store_id: testStore.id,
+                })
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect("Location", "/api/buser/sin")
+                    expect(res).to.have.status(200)
+
+                    done()
+                })
+        })
     })
 }
 
