@@ -86,7 +86,7 @@ export async function getMenu(req: Request, res: Response) {
     //1, store id만 지정된 경우
     //해당 store의 모든 menu전달
     if (targetStoreId && (targetMenuId == undefined)) {
-        const store = await Store.findOne({
+        const stores = await Store.findAll({
             where: {
                 id: targetStoreId,
                 buser_id: req.session.buser.id
@@ -94,7 +94,7 @@ export async function getMenu(req: Request, res: Response) {
             include: Menu
         })
 
-        if (store == null) {
+        if (stores == null) {
             res.status(400).json({
                 code: 404,
                 message: "매장을 찾지 못했습니다."
@@ -105,7 +105,7 @@ export async function getMenu(req: Request, res: Response) {
 
         res.status(200).json({
             code: 200,
-            data: store.getDataValue("Menus")
+            data: stores
         })
 
         //exit function
