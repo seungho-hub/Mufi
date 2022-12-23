@@ -159,7 +159,7 @@ export async function updateStore(req: Request, res: Response) {
         return
     }
 
-    const { name, description, zip_code, detail_address } = req.body
+    const { name, description, zip_code, address, detail_address } = req.body
 
     if ((name && description && zip_code && detail_address) == undefined) {
         res.status(400).json({
@@ -196,6 +196,7 @@ export async function updateStore(req: Request, res: Response) {
         name,
         description,
         zip_code,
+        address,
         detail_address
     })
         .then((updatedStore) => {
@@ -215,8 +216,6 @@ export async function updateStore(req: Request, res: Response) {
 //delete store
 export async function deleteStore(req: Request, res: Response) {
     const targetId = req.query.store_id
-    console.log("req body : ", req.body)
-    console.log(targetId, req.session.buser.id);
 
     if (targetId == undefined) {
         res.status(400).json({
