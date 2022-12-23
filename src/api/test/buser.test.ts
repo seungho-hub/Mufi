@@ -273,6 +273,37 @@ if (server.listening) {
                     done()
                 })
         })
+
+        // step("14. [buser] get order", (done) => {
+        //     agent
+        //         .get("/api/buser/order")
+        //         .query({
+        //             store_id: testStore.id,
+
+        //         })
+        //         .end((err, res) => {
+        //             expect(err).to.be.null
+        //             expect("Location", "/api/buser/sin")
+        //             expect(res).to.have.status(200)
+
+        //             done()
+        //         })
+        // })
+
+        step("15. [buser] get orders", (done) => {
+            agent
+                .get("/api/buser/order")
+                .query({
+                    store_id: testStore.id,
+                })
+                .end((err, res) => {
+                    expect(err).to.be.null
+                    expect("Location", "/api/buser/sin")
+                    expect(res).to.have.status(200)
+
+                    done()
+                })
+        })
     })
 }
 
