@@ -77,7 +77,14 @@ export function getMenuList(code) {
     })
 }
 
-function setStoreList(select) {
+export function setModal () {
+    menuModalTitle.innerText = "메뉴 신규 등록";
+    setStoreSelectList(modalStoreList); // 매장명 셋팅
+    menuModalElement.forEach((element) => element.value = ""); //다 비우기
+    modalStoreList.removeAttribute("disabled");
+}
+
+function setStoreSelectList(select) {
     while(select.firstChild) select.removeChild(select.firstChild);
     const voidValue = document.createElement("option");
     voidValue.innerText = "매장 선택";
@@ -96,12 +103,7 @@ function setStoreList(select) {
     .catch(error => console.log("Error: " + error));
 }
 
-export function setModal () {
-    menuModalTitle.innerText = "메뉴 신규 등록";
-    setStoreList(modalStoreList); // 매장명 셋팅
-    menuModalElement.forEach((element) => element.value = ""); //다 비우기
-    modalStoreList.removeAttribute("disabled");
-}
+
 
 function addMenu(event) {
     event.preventDefault();
