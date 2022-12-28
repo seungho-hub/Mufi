@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/css/modal.css">
+
 <div id="store-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical">
         <div id="content" class="uk-margin-large uk-width-xlarge@s">
@@ -9,26 +11,26 @@
                         <div class="uk-child-width-1-2@s uk-grid-small" uk-grid>
                             <div>
                                 <div class="uk-margin uk-width-medium@s">
-                                    <h5>매장 이름</h5>
+                                    <h4>매장 이름</h4>
                                     <input id="store-modal-name" class="uk-input" type="text" value="fuck" name="name" placeholder="명칭">
                                 </div>
                             </div>
                             
                             <div>
                                 <div class="uk-margin uk-width-medium@s">
-                                    <h5>매장 코드</h5>
+                                    <h4>매장 코드</h4>
                                     <input id="store-modal-code" class="uk-input" type="text" value="123123" name="code" placeholder="발급받은 매장 코드를 입력해주세요">
                                 </div>
                             </div>
                             <div class="uk-width-xlarge@s">
                                 <div class="uk-margin">
-                                    <h5>메모</h5>
+                                    <h4>메모</h4>
                                     <textarea id="store-modal-description" class="uk-textarea" type="text" rows="3" name="description" placeholder="매장의 위치, 특징에 대한 간단한 설명을 입력해주세요">fuck</textarea>
                                 </div>
                             </div>
                             <div class="uk-width-xlarge@s">
                                 <div uk-margin class="uk-margin uk-width-xlarge@s">
-                                    <h5>매장 주소</h5>
+                                    <h4>매장 주소</h4>
                                     <input class="uk-input uk-width-1-2" type="text" value="23232" name="zip_code" id="postcode" placeholder="우편번호" readonly>
                                     <input class="uk-button uk-button-primary uk-width-auto" type="button" onclick="execDaumPostcode()" value="우편번호 검색"><br>
                                     <div id="wrap" style="display:none;border:1px solid;width:100%;height:300px;margin:5px 0;position:relative">
@@ -45,11 +47,11 @@
                         </div>
                         <div class="uk-margin uk-flex uk-flex-between">
                             <span>
-                                <button id="btn-delete-store" class="uk-button uk-button-danger" type="submit">삭제</button>
+                                <button id="btn-delete-store-form" value="DELETE" class="uk-button uk-button-danger hidden" type="button">삭제</button>
                             </span>
                             <span>
                                 <button class="uk-button uk-button-default uk-modal-close" type="button">취소</button>
-                                <button class="uk-button uk-button-primary" type="submit">저장</button>
+                                <button id="btn-submit-store-form" class="uk-button uk-button-primary" type="button">저장</button>
                             </span>
                         </div>
                     </form>

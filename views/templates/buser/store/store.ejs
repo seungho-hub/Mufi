@@ -1,5 +1,18 @@
 <%- include ('../index/header') %>
 <div class="uk-grid-small uk-animation-slide-bottom-small" uk-grid="masonry: true;">
+    <div id="div-sin" class="uk-width-1-1 hidden">
+        <div class="uk-card uk-card-default uk-card-body">
+            <div class="uk-flex uk-flex-between">
+                <div>
+                    <span>청주점 키오스크 인증코드 - </span>
+                    <span id="sin-value">603423</span>
+                </div>
+                <div id="btn-div-sin-close">
+                    <button class="uk-close-large" type="button" uk-close></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="uk-width-1-1">
         <div class="uk-card uk-card-default uk-card-body" >
             <div>
@@ -15,6 +28,7 @@
                             <th>상점 이름</th>
                             <th>메뉴 추가</th>
                             <th>메뉴 보기</th>
+                            <th>인증하기</th>
                             <th>설정</th>
                         </tr>
                     </thead>
@@ -61,5 +75,6 @@
 <script src="/js/addressAPI.js"></script>
 <script src="/js/menu/menuApi.js" type="module"></script>
 <script src="/js/storeApi.js" type="module"></script>
+<link rel="stylesheet" href="/css/modal.css">
 
 <%- include ('../index/footer') %>
