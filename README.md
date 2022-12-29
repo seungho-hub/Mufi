@@ -24,25 +24,29 @@ Mufi kiosk를 위한 webservice입니다.
     
 ### 3. initialize
 
-#### database의 table을 생성합니다.
+#### .env에 지정된 database에 table을 생성합니다.
     
     yarn run init
-
 
 
 ## run server
 
 
-### run server in development mode
+### in development mode
 
     yarn run dev
 
 
 
-### run server in development mode and watch 
+### in development mode and watch 
 re-run server  whenever source code change detected
 
     yarn run watch
+
+
+## test
+
+    yarn run test
 
 # Author
 
