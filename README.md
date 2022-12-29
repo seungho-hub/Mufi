@@ -5,21 +5,42 @@
 Mufi kiosk를 위한 webservice입니다.
 
 
-### install dependencies
-  
+### 0. create dotenv file
+    
+.env.example 파일을 참고해 .env 파일을 생성해주세요
+    
+    
+### 1. install dependencies
+
+의존성 모듈을 설치합니다.
+
     yarn install
 
-### compile typescript to javascript
+
+### 2. compile typescript to javascript
 
     yarn run compile
+    
+    
+### 3. initialize
 
-### run server
+#### database의 table을 생성합니다.
+    
+    yarn run init
+
+
+
+## run server
+
+
+### run server in development mode
 
     yarn run dev
 
 
-### run server with watch mode 
-(re-run server  whenever source code change detected)
+
+### run server in development mode and watch 
+re-run server  whenever source code change detected
 
     yarn run watch
 
