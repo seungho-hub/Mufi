@@ -7,7 +7,9 @@ const server = app.listen(port, process.env.HOST, onListening);
 
 server.on("error", onError);
 
-console.log(expressListRoutes(app))
+if (process.env.NODE_ENV == "development") {
+    console.log(expressListRoutes(app))
+}
 
 function onError(error: NodeJS.ErrnoException) {
     if (error.syscall !== "listen") {
@@ -21,11 +23,9 @@ function onError(error: NodeJS.ErrnoException) {
         case "EACCES":
             console.error(`${bind} requires elevated privileges`);
             process.exit(1);
-            break;
         case "EADDRINUSE":
             console.error(`${bind} is already in use`);
             process.exit(1);
-            break;
         default:
             throw error;
     }
