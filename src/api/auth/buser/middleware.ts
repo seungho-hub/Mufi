@@ -13,18 +13,22 @@ export function bUserAuthenticated(req: Request, res: Response, next: NextFuncti
             .then((buser) => {
                 if (buser) {
                     next()
+                } else {
+                    res.redirect("/auth/buser/signin")
                 }
-
             })
             .catch(() => {
-
+                res.status(500).json({
+                    code: 500,
+                    message: "알 수 없는 에러가 발생했습니다."
+                })
             })
+
+        return
     } else {
         res.redirect("/auth/buser/signin")
         return
     }
-
-    return
 }
 
 //for except authentication router
