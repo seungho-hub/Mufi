@@ -42,7 +42,8 @@ app.set("views", path.join(__dirname, "../views", "templates"))
 
 //static serving
 app.use(express.static(path.join(__dirname, "../views", "statics")))
-app.use(express.static(path.join(process.env.PWD, "media")))
+console.log(process.cwd())
+app.use(express.static(path.join(process.cwd(), "media")))
 
 //enable body parser
 app.use(express.urlencoded({ extended: true }))
